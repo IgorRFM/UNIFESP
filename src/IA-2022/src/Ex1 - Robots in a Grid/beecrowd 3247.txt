@@ -1,0 +1,21 @@
+https://www.beecrowd.com.br/judge/pt/problems/view/3247
+
+Recentemente, você criou um robô que pode encontrar seu caminho para atravessar uma grade do canto superior esquerdo até o canto inferior direito. 
+No entanto, você esqueceu todas as suas habilidades de programação de IA, então você apenas programou seu robô para ir para a direita e para baixo 
+(afinal, é aí que está o objetivo). Você colocou seu robô em uma grade com alguns obstáculos e se senta e observa. No entanto, depois de um tempo 
+você se cansa de observar que ele fica travado e se pergunta: “Quantos caminhos existem da posição inicial até a posição da meta?” E “Se não houver 
+nenhuma, o robô poderia ter chegado à meta se pudesse andar para cima e para a esquerda? ”
+
+Então você decide escrever um programa que, dada uma grade de tamanho n × n com alguns obstáculos marcados onde o robô não pode andar, conte as 
+diferentes maneiras que o robô poderia ir do canto superior esquerdo s para o canto inferior direito t, e se nenhum, testa se era possível se ele 
+poderia subir e sair também. No entanto, seu programa não lida com números muito grandes, portanto, a resposta deve ser módulo 231- 1 .
+
+Entrada
+Na primeira linha está um inteiro, 1 ≤ n ≤ 1000. Em seguida, seguem n linhas, cada uma com n caracteres, onde cada caractere é um de '.' e '#', 
+onde '.' deve ser interpretado como um bloco que pode ser percorrido e '#' como um bloco que não pode ser percorrido. Nunca haverá uma parede em s, 
+e nunca haverá uma parede em t.
+
+Saída
+Produza uma linha com o número de caminhos diferentes começando em se terminando em t (módulo 231 - 1) ou THE GAME IS A LIE se você não puder ir 
+de s até t indo apenas para a direita e para baixo, mas você pode se tiver permissão para ir para a esquerda e para cima também, ou INCONCEIVABLE 
+se simplesmente não houver caminho de s para t.

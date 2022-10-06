@@ -1,0 +1,12 @@
+MÁQUINA: AMD Phenom(tm) II x4 B93, 4 CPUs
+	TESTES:
+		2048x2048, 470 gerações
+			OPENMP (1 th) = [93.89s, 93.52s]
+			OPENMP (2 th) = [47.43s, 47.44s]
+			OPENMP (4 th) = [24.19s, 24.16s]
+			OPENMP (8 th) = [25.52s, 25.39s]
+		2048x2048, 2000 gerações
+			OPENMP (1 th) = [401.45s, 401.36s]
+			OPENMP (2 th) = [201.69s, 202.13s]
+			OPENMP (4 th) = [102.28, 101.25s]
+			OPENMP (8 th) = [103.48, 102.32s]

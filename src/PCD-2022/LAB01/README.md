@@ -2,7 +2,7 @@
 ## LAB 01
 
 
-> Igor Ribeiro Ferreira de Matos, Ana clara Mueller Miranda, Ulisses
+> Igor Ribeiro Ferreira de Matos, Ana clara Mueller Miranda, Ulisses Auresco Damasio
 
 ### Explicação do algoritmo e execução
 

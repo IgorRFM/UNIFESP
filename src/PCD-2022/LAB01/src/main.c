@@ -12,7 +12,7 @@
 #include "func.h"
 
 #define TAM_TAB 2048
-#define GERACOES 470
+#define GERACOES 2000
 
 int qtde_threads = 1;
 int **grid;
@@ -33,7 +33,7 @@ int main(int argc, char **argv){
 
 	if(argc != 4){
 		printf("Execute o programa da seguinte forma: \n");
-		printf("./openmp_highlife [omp || pthread] [normal || highlife] [qtde de threads a serem utilizadas]\n");
+		printf("./main [omp || pthread] [normal || highlife] [qtde de threads a serem utilizadas]\n");
 		return 0;
 	}else{
 		qtde_threads = (int)argv[3][0]-48;
@@ -59,6 +59,7 @@ int main(int argc, char **argv){
 
 	int i,j, total_restante;
 	double start, end, run;
+
 	grid = (int**) malloc(sizeof(int*)*TAM_TAB);
 	newgrid = (int**) malloc(sizeof(int*)*TAM_TAB);
 	
@@ -158,11 +159,6 @@ void executa_openmp(int **grid, int **newgrid, int iteracoes){
 			}
 		}
 }
-		// if(i%2==0){
-		// 	printf("Geração (%d): %d\n", i+1, getSobreviventes(newgrid));	
-		// }else{
-		// 	printf("Geração (%d): %d\n", i+1, getSobreviventes(grid));		
-		// }
 	}
 }
 
@@ -185,7 +181,7 @@ void cria_threads(){
 	for(i=0; i<qtde_threads; i++){
 		pthread_join(thr[i], NULL);
 	}
-
+	
 }
 
 void *executa_pthread(void* tid){
@@ -195,8 +191,6 @@ void *executa_pthread(void* tid){
 	int intervalo = TAM_TAB / qtde_threads;
 	int inicio = intervalo * thid;
 	int fim = inicio+intervalo;
-
-	// printf("\nThread %d: %d a %d\n", thid, inicio, fim);
 
 	for(i=0; i<GERACOES; i++){
 		for(linha=inicio; linha<fim; linha++){
@@ -214,13 +208,8 @@ void *executa_pthread(void* tid){
 				}
 			}
 		}
-		// if(i%2==0){
-		// 	printf("Geração (%d): %d\n", i+1, getSobreviventes(newgrid));	
-		// }else{
-		// 	printf("Geração (%d): %d\n", i+1, getSobreviventes(grid));		
-		// }
+
 		int bn = pthread_barrier_wait(&barr); 
-		// printf("Barreira em %d\n", i);
 		if(bn == PTHREAD_BARRIER_SERIAL_THREAD){
 	    	continue;
 	  			 			

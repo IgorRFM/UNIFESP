@@ -78,12 +78,12 @@ public class Car implements Runnable {
 		boolean ponte = cartype == REDCAR ? xpos > bridgeXLeft : xpos < bridgeXRight;
 
 		try {
-			System.out.println("Permits: " + sem.availablePermits());
+			// System.out.println("Permits: " + sem.availablePermits());
 			// sem.acquire();
 
-			System.out.println("SemAcquire " + cartype + " " + sem.availablePermits());
+			// System.out.println("SemAcquire " + cartype + " " + sem.availablePermits());
 			while (!outOfSight) {
-				System.out.println("Na ponte? " + ponte + "| (" + xpos + ")");
+				// System.out.println("Na ponte? " + ponte + "| (" + xpos + ")");
 				// System.out.println("Outofsight: " + outOfSight + cartype);
 				move();
 				outOfSight = cartype == REDCAR ? xpos > totalWidth : xpos < -80;
@@ -91,7 +91,7 @@ public class Car implements Runnable {
 				if (ponte) {
 					sem.acquire();
 					while (ponte) {
-						System.out.println("Na ponte");
+						// System.out.println("Na ponte");
 						ponte = xpos > bridgeXLeft && xpos < bridgeXRight ? true : false;
 						move();
 						try {
@@ -106,7 +106,7 @@ public class Car implements Runnable {
 				} catch (InterruptedException e) {
 				}
 			}
-			System.out.println("SemRelease " + cartype + " " + sem.availablePermits());
+			// System.out.println("SemRelease " + cartype + " " + sem.availablePermits());
 			// sem.release();
 
 		} catch (Exception e) {

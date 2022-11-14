@@ -1,5 +1,3 @@
-import java.util.concurrent.Semaphore;
-
 public class Main {
 
 	private static void nap(int ms) {

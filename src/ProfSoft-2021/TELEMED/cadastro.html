@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<title>Criar conta</title>
+	<style>
+		#border {
+			border-radius: 25px;
+			border: 2px solid #700044;
+			padding: 20px;
+			border-width: thick;
+			height: 150px;  
+		}
+
+		body {
+			font: normal 18pt Arial;
+			text-align: center;
+
+		}
+
+		 input {
+		    font: normal 18pt Arial;
+		    width: 100%;
+		    border-radius: 10px;
+		}
+
+
+		fieldset {
+			margin: 0 auto;
+			width: 50vw;
+			border-radius: 30px;
+			border-style: solid;
+			 border-width: thick;
+		}
+
+		<!-- style="font: normal 18pt Arial; width: 100%; border-radius: 10px;" -->
+	</style>
+</head>
+<center>
+
+	<body>
+		<div id="myModal" class="modal fade">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body ">
+						<p>Qual tipo de perfil?</p>
+						<form>
+							<input type="radio" id="medico" name="medico" value="medico">
+							<label for="medico">Medico</label>
+							<input type="radio" id="paciente" name="paciente" value="paciente">
+							<label for="paciente">Paciente</label>
+							<br><button type="button" id="cadastrar" data-dismiss="modal">Cadastrar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<fieldset style="margin-top:110px">
+			<div class="registration-form" id="border">
+				<form action="cadastro.php" method="post" id="form_cad">
+
+					<input type="text" class="form-control item" id="nome" name="nome"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;" placeholder="Nome">
+					<input type="date" class="form-control item" id="datnas" name="datnas"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;"
+						placeholder="Data de Nascimento">
+					<input type="text" class="form-control item" id="username" name="username"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;" placeholder="User">
+					<input type="password" class="form-control item" id="password" name="password"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;" placeholder="Senha">
+					<input type="text" class="form-control item" id="convenio" name="convenio"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;" placeholder="Convenio">
+					<input type="email" class="form-control item" id="email" name="email"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;" placeholder="Email">
+
+					<input type="text" class="form-control item" id="esp" name="esp"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;" placeholder="Especialidade">
+					<input type="text" class="form-control item" id="preco" name="preco"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;"
+						placeholder="Preco Consulta Particulas">
+					<input type="date" class="form-control item" id="diasaten" name="diasaten"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;"
+						placeholder="Dias de Atendimento">
+					<input type="time" class="form-control item" id="hraten" name="hraten"
+						style="font: normal 18pt Arial; width: 100%; border-radius: 10px;"
+						placeholder="Horario de Atendimento">
+
+
+
+
+					<input type="submit" id="create"
+						style="width: 200px; text-align: center; font: normal 18pt Arial; width: 100%; border-radius: 10px;"
+						value="Cadastro!"></input>
+				</form>
+			</div>
+		</fieldset>
+		<script type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+		<script src="assets/js/script.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	</body>
+</center>
+
+</html>
+
+<script>
+	$(document).ready(function () {
+		document.getElementById("form_cad").style.visibility = "hidden";
+		$("#myModal").modal('show');
+
+	});
+
+	$("#cadastrar").click(function () {
+		$('#myModal').modal({
+			show: false
+		})
+		if (medico.checked) {
+			document.getElementById("form_cad").style.visibility = "visible";
+			document.getElementById("datnas").style.display = "none";
+			document.getElementById("convenio").style.display = "none";
+		}
+		else {
+			document.getElementById("form_cad").style.visibility = "visible";
+
+			document.getElementById("esp").style.display = "none";
+			document.getElementById("preco").style.display = "none";
+			document.getElementById("diasaten").style.display = "none";
+			document.getElementById("hraten").style.display = "none";
+
+		}
+
+
+	});
+
+
+
+</script>

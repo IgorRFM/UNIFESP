@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+	<style> 
+		#border { 
+		  border-radius: 25px;
+		  border: 2px solid #700044;
+		  padding: 20px; 
+          border-width: thick;
+		  //height: 150px;  
+		}
+		body {
+            font: normal 18pt Arial;
+            text-align: center;
+
+        }
+
+        input {
+            font: normal 18pt Arial;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+
+        fieldset {
+            margin: 0 auto;
+            width: 20vw;
+            border-radius: 30px;
+            //border-style: solid;
+           // border-width: thick;
+        }
+        </style>
+</head>
+<center>
+<body>
+	<fieldset style="margin-top:110px">
+    <div class="registration-form" id="border">
+        <form action="/login2.php" method="post" >           
+            <div class="form-group">
+                <input type="text" class="form-control item" id="username" name="username" placeholder="User">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control item" id="password" name="password" placeholder="Senha">
+            </div>
+            <br>
+            <input type="submit" id="login" style="width: 200px; text-align: center;"value="Login"></input>
+			<a href="/cadastro.html"style="font-size:15px">Cadastre-se!</a>
+        </form>
+    </div>
+	</fieldset>
+
+</body>
+</center>
+</html>
+							

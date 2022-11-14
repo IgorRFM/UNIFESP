@@ -1,0 +1,466 @@
+node n1 {
+    type router
+    model router
+    network-config {
+	hostname n1
+	!
+	interface eth5
+	 ip address 10.0.5.1/24
+	 ipv6 address 2001:5::1/64
+	!
+	interface eth4
+	 ip address 10.0.4.1/24
+	 ipv6 address 2001:4::1/64
+	!
+	interface eth3
+	 ip address 10.0.3.1/24
+	 ipv6 address 2001:3::1/64
+	!
+	interface eth2
+	 ip address 10.0.2.1/24
+	 ipv6 address 2001:2::1/64
+	!
+	interface eth1
+	 ip address 10.0.1.1/24
+	 ipv6 address 2001:1::1/64
+	!
+	interface eth0
+	 ip address 10.0.0.1/24
+	 ipv6 address 2001:0::1/64
+	!
+    }
+    canvas c1
+    iconcoords {296.0 299.0}
+    labelcoords {298.0 322.0}
+    interface-peer {eth0 n2}
+    interface-peer {eth1 n3}
+    interface-peer {eth2 n9}
+    interface-peer {eth3 n8}
+    interface-peer {eth4 n10}
+    interface-peer {eth5 n13}
+}
+
+node n2 {
+    type router
+    model host
+    network-config {
+	hostname DNS-ROOT
+	!
+	interface eth0
+	 ip address 10.0.0.10/24
+	 ipv6 address 2001:0::10/64
+	!
+    }
+    canvas c1
+    iconcoords {149.0 133.0}
+    labelcoords {148.0 192.0}
+    interface-peer {eth0 n1}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc/bind', '/run/named', '/var/cache/bind', '/var/lib/bind', '/var/run/named', '/var/log', )
+	files=('/startnamed.sh', )
+	cmdup=('bash startnamed.sh', )
+	cmddown=('/etc/init.d/named stop', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/startnamed.sh
+	custom-command /startnamed.sh
+	config {
+	cp /home/dns_trabalho/dns-root/* /etc/bind/
+	/etc/init.d/named start
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+node n3 {
+    type router
+    model host
+    network-config {
+	hostname DNS-TLD-BR
+	!
+	interface eth0
+	 ip address 10.0.1.10/24
+	 ipv6 address 2001:1::10/64
+	!
+    }
+    canvas c1
+    iconcoords {516.0 82.0}
+    labelcoords {520.0 135.0}
+    interface-peer {eth0 n1}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc/bind', '/run/named', '/var/cache/bind', '/var/lib/bind', '/var/run/named', '/var/log', )
+	files=('/startnamed.sh', )
+	cmdup=('bash startnamed.sh', )
+	cmddown=('/etc/init.d/named stop', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/startnamed.sh
+	custom-command /startnamed.sh
+	config {
+	cp /home/dns_trabalho/dns-tld-br/* /etc/bind/
+	/etc/init.d/named start
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+node n4 {
+    type router
+    model host
+    network-config {
+	hostname DNS-A-UNIFESP
+	!
+	interface eth0
+	 ip address 10.0.2.10/24
+	 ipv6 address 2001:2::10/64
+	!
+    }
+    canvas c1
+    iconcoords {599.0 563.0}
+    labelcoords {604.0 604.0}
+    interface-peer {eth0 n9}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc/bind', '/run/named', '/var/cache/bind', '/var/lib/bind', '/var/run/named', '/var/log', )
+	files=('/startnamed.sh', )
+	cmdup=('bash startnamed.sh', )
+	cmddown=('/etc/init.d/named stop', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/startnamed.sh
+	custom-command /startnamed.sh
+	config {
+	cp /home/dns_trabalho/dns-a-unifesp/* /etc/bind/
+	/etc/init.d/named start
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+node n5 {
+    type router
+    model host
+    network-config {
+	hostname web
+	!
+	interface eth0
+	 ipv6 address 2001:2::11/64
+	 ip address 10.0.2.11/24
+	!
+    }
+    canvas c1
+    iconcoords {392.0 573.0}
+    labelcoords {391.0 616.0}
+    interface-peer {eth0 n9}
+}
+
+node n6 {
+    type router
+    model host
+    network-config {
+	hostname DNS-LOCAL
+	!
+	interface eth0
+	 ip address 10.0.3.10/24
+	 ipv6 address 2001:3::10/64
+	!
+    }
+    canvas c1
+    iconcoords {68.0 526.0}
+    labelcoords {68.0 568.0}
+    interface-peer {eth0 n8}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc/bind', '/run/named', '/var/cache/bind', '/var/lib/bind', '/var/log', '/var/run/named', )
+	files=('/startnamed.sh', )
+	cmdup=('bash startnamed.sh', )
+	cmddown=('/etc/init.d/named stop', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/startnamed.sh
+	custom-command /startnamed.sh
+	config {
+	cp /home/dns_trabalho/dns-local/* /etc/bind/
+	/etc/init.d/named start
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+node n7 {
+    type router
+    model PC
+    network-config {
+	hostname cliente
+	!
+	interface eth0
+	 ip address 10.0.3.20/24
+	 ipv6 address 2001:3::20/64
+	!
+    }
+    canvas c1
+    iconcoords {248.0 567.0}
+    labelcoords {249.0 602.0}
+    interface-peer {eth0 n8}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc', )
+	files=('/etc/resolv.conf', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/etc/resolv.conf
+	custom-command /etc/resolv.conf
+	config {
+	nameserver 10.0.3.10
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+node n8 {
+    type lanswitch
+    network-config {
+	hostname n8
+	!
+    }
+    canvas c1
+    iconcoords {212.0 415.0}
+    labelcoords {212.0 439.0}
+    interface-peer {e0 n1}
+    interface-peer {e1 n7}
+    interface-peer {e2 n6}
+}
+
+node n9 {
+    type lanswitch
+    network-config {
+	hostname n9
+	!
+    }
+    canvas c1
+    iconcoords {411.0 447.0}
+    labelcoords {411.0 471.0}
+    interface-peer {e0 n1}
+    interface-peer {e1 n4}
+    interface-peer {e2 n5}
+}
+
+node n10 {
+    type lanswitch
+    network-config {
+	hostname n10
+	!
+    }
+    canvas c1
+    iconcoords {533.0 336.0}
+    labelcoords {533.0 360.0}
+    interface-peer {e0 n12}
+    interface-peer {e1 n11}
+    interface-peer {e2 n1}
+}
+
+node n11 {
+    type router
+    model host
+    network-config {
+	hostname web
+	!
+	interface eth0
+	 ip address 10.0.4.11/24
+	 ipv6 address 2001:4::11/64
+	!
+    }
+    canvas c1
+    iconcoords {711.0 469.0}
+    labelcoords {711.0 501.0}
+    interface-peer {eth0 n10}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc/bind', '/run/named', '/var/cache/bind', '/var/lib/bind', '/var/run/named', '/var/log', )
+	files=('/startweb.sh', )
+	cmdup=('bash startweb.sh', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/startweb.sh
+	custom-command /startweb.sh
+	config {
+	cp /home/dns_trabalho/web-google-com/* /etc/bind/
+	gcc -Wall -o file-server file-server.c
+	
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+node n12 {
+    type router
+    model host
+    network-config {
+	hostname DNS-A-GOOGLE
+	!
+	interface eth0
+	 ip address 10.0.4.10/24
+	 ipv6 address 2001:4::10/64
+	!
+    }
+    canvas c1
+    iconcoords {762.0 350.0}
+    labelcoords {762.0 382.0}
+    interface-peer {eth0 n10}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc/bind', '/run/named', '/var/cache/bind', '/var/lib/bind', '/var/run/named', '/var/log', )
+	files=('/startnamed.sh', )
+	cmdup=('bash startnamed.sh', )
+	cmddown=('/etc/init.d/named stop', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/startnamed.sh
+	custom-command /startnamed.sh
+	config {
+	cp /home/dns_trabalho/dns-a-google/* /etc/bind/
+	/etc/init.d/named start
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+node n13 {
+    type router
+    model host
+    network-config {
+	hostname DNS-TLD-COM
+	!
+	interface eth0
+	 ip address 10.0.5.10/24
+	 ipv6 address 2001:5::10/64
+	!
+    }
+    canvas c1
+    iconcoords {671.0 144.0}
+    labelcoords {671.0 176.0}
+    interface-peer {eth0 n1}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	dirs=('/etc/bind', '/run/named', '/var/cache/bind', '/var/lib/bind', '/var/run/named', '/var/log', )
+	files=('/startnamed.sh', )
+	cmdup=('bash startnamed.sh', )
+	cmddown=('/etc/init.d/named stop', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:/startnamed.sh
+	custom-command /startnamed.sh
+	config {
+	cp /home/dns_trabalho/dns-tld-com/* /etc/bind/
+	/etc/init.d/named start
+	}
+    }
+    services {DefaultRoute UserDefined}
+}
+
+link l1 {
+    nodes {n1 n2}
+    bandwidth 0
+}
+
+link l2 {
+    nodes {n1 n3}
+    bandwidth 0
+}
+
+link l3 {
+    nodes {n1 n9}
+    bandwidth 0
+}
+
+link l4 {
+    nodes {n9 n4}
+    bandwidth 0
+}
+
+link l5 {
+    nodes {n9 n5}
+    bandwidth 0
+}
+
+link l6 {
+    nodes {n1 n8}
+    bandwidth 0
+}
+
+link l7 {
+    nodes {n8 n7}
+    bandwidth 0
+}
+
+link l8 {
+    nodes {n8 n6}
+    bandwidth 0
+}
+
+link l9 {
+    nodes {n10 n12}
+    bandwidth 0
+}
+
+link l10 {
+    nodes {n10 n11}
+    bandwidth 0
+}
+
+link l11 {
+    nodes {n10 n1}
+    bandwidth 0
+}
+
+link l12 {
+    nodes {n13 n1}
+    bandwidth 0
+}
+
+canvas c1 {
+    name {Canvas1}
+}
+
+option global {
+    interface_names no
+    ip_addresses yes
+    ipv6_addresses yes
+    node_labels yes
+    link_labels yes
+    show_api no
+    background_images no
+    annotations yes
+    grid yes
+    traffic_start 0
+}
+
+option session {
+}
+

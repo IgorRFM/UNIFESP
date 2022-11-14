@@ -1,0 +1,65 @@
+Grupo: 
+- Igor Ribeiro.
+
+
+Nota final do trabalho = média das notas das questões 1, 2, 3 e 4.
+Nota final do trabalho = (5 + 6.7 + 4.6 + 5) / 4 = 5,3
+
+====
+1) Utilizando o emulador CORE, defina e implemente uma topologia de rede que possa representar essa visão macro da Internet, conforme exposto acima.
+---------- NOTA CORREÇÃO Q1: nota 5
+Não explicou como a visão macro está representada na topologia. Está o núcleo da rede? Os ISPs? Os ASs?
+
+2) Sobre gargalos
+---------- NOTA CORREÇÃO MEDIA Q2: (5 + 10 + 5) /3 = 6.7 
+
+2.1) Considerando a topologia de rede que você implementou no emulador, explique onde estão os possíveis gargalos na comunicação fim-a-fim entre os sistemas finais da rede residencial (clientes) e os sistemas da rede institucional (servidores).
+*** NOTA Q2.1: nota 5
+Não explicou porque o gargalo estaria ali naquele link. Isso ocorreria na Internet? Se sim, por que?
+
+2.2) Considerando a sua topologia, configure um enlace de gargalo considerando capacidades assimétricas, ou seja, uma taxa x para upstream e uma taxa y para downstream, tipicamente, x < y.
+*** NOTA Q2.2: nota 10
+
+2.3) Uma vez configurado o enlace de gargalo, realize testes com a ferramenta Iperf e explique o impacto do gargalo na vazão fim-a-fim sobre os seguintes cenários:
+a) Um cliente fazendo download de conteúdo de um servidor remoto. Estresse a rede com
+outos clientes simultâneos em download sobre o mesmo enlace de gargalo e justifique a vazão obtida em cada download.
+b) Um cliente fazendo upload de conteúdo para um servidor remoto. Estresse a rede com dois
+clientes simultâneos em upload sobre o mesmo enlace de gargalo e justifique a vazão obtida em cada upload.
+*** NOTA Q2.3: nota 5
+Não explicou porque  os recursos (banda do gargalo) foi divida daquele forma, em termos de protocolo de transporte.
+
+
+3) Sobre Atrasos
+---------- NOTA CORREÇÃO MEDIA Q3: (3 + 5 + 5 + 5 + 5) / 5 = 4.6
+
+3.1) Considerando a sua topologia de rede, explique quais são as fontes de atraso no caminho fim-a-fim, dos sistemas finais clientes na rede residencial aos servidores na rede institucional. Utilizando a ferramenta ping, explique os atrasos observados e como eles são determinados.
+*** NOTA Q3.1: nota 3
+Não explicou as fontes de atraso. Não explicou como a ferramenta determina o tempo. 
+
+3.2) Altere o MTU (maximum transmission unit) do pacote na ferramenta ping e verifique o impacto na latência. Para fins de testes mais amplos, mostre as latências observadas no intervalo de 100 Bytes às 1500 Bytes. Tente identificar a relação de bytes e latência. Explique as fontes de atraso que estão mais impactando na latência. Explique porque ocorrem erros com ping sobre pacotes grandes (e.g., 1500 Bytes).
+*** NOTA Q3.2: nota 5
+Não explicou o impacto das fontes de atraso na relação entre byte e latência.
+
+3.3) Gere carga na rede com os testes dos cenários a) e b) de transmissão da questão 2.2. Durante o download e upload, execute a ferramenta ping e verifique as latências observadas. Explique as possíveis fontes de atraso que estão impactam na latência.
+*** NOTA Q3.3: nota 5
+Não explicou as possíveis fontes de atrasos que impactam a latência observada. 
+
+3.4) Agora, sem carga na rede, utilizando a ferramenta traceroute, explique os atrasos observados e como eles são determinados.
+*** NOTA Q3.4: nota 5
+Não explicou como a ferramenta determina o tempo.  
+
+3.5) Novamente, gere carga na rede com os testes dos cenários a) e b) de transmissão da questão 2.2. e, durante o download/upload, execute a ferramenta traceroute. Verifique as latências observadas e explique se é possível determinar onde está ocorrendo congestionamento na rede.
+*** NOTA Q3.5: nota 5
+Exercício pede para explicar. Identificaram ponto de maior latência mas não explicaram porque.
+
+
+4) Sobre Perdas
+---------- NOTA CORREÇÃO MEDIA Q4: (5 + 5) / 2 = 5
+
+4.1) Uma vez configurado o enlace de gargalo, realize testes com a ferramenta Iperf, desta vez utilizando transmissões UDP (user datagram protocol). Conecte um cliente a um servidor passando por um gargalo. Gere carga UDP com taxa superior ao gargalo. Configure o enlace de gargalo com uma taxa de perda (loss) maior que zero. Verifique a taxa de perda no lado do servidor e explique.
+*** NOTA Q4.1: nota 5
+Não explicou porque ocorrem perdas no udp. 
+
+4.2) Agora, configure o enlace de gargalo com uma taxa de perda de 0%. Repita o teste da questão anterior. Verifique novamente a taxa de perda no lado do servidor e explique.
+*** NOTA Q4.2: nota 5
+Não observou perda porque não teve carga suficiente (>= a capacidade do gargalo). Iperf por padrão limita a taxa UDP a 1mbps.

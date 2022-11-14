@@ -1,0 +1,29 @@
+Grupo:
+Igor Ribeiro
+
+
+Nota: (7 + 6) / 2 = 6,5
+***Comentário geral: conseguiram implementar o trabalho e mostrar o funcionamento; por outro lado, reproduziu  exemplos das video-aulas, demonstração foi pouco explorada.
+
+Q1)
+... utilizando o emulador CORE, defina e implemente uma topologia de rede que possa representar essa visão macro da Internet. A sua topologia deve incluir:
+• ASs de núcleo de borda, representando diferentes ISPs e redes de acesso, respectivamente.
+• Servidores da hierarquia DNS para resolver ao menos dois FQDN que pertençam a domínios
+diferentes tanto em nível de TLD quanto de Autoridade. Cada servidor deve estar localizado em uma rede própria de acesso.
+• Um servidor de aplicação que pertença a cada um dos domínios de autoridade definidos. Note que o ambos servidor DNS de autoridade e servidor de aplicação geralmente estão localizados no mesmo AS.
+• Ao menos uma rede acesso contendo um servidor DNS local e um cliente.
+
+======= Nota: 7
+***Comentário:  Faltou representar a internet, topologia com servidor conectado direto no roteador. 
+Implementou dois FQDNs, explicou o que e como fez nos arquivos de configuração. Um pouco mais de profundidade seria importante, por exemplo, o que se trata cada tipo de registro, a sua semântica. Não demonstrou a resolução.
+
+Q2)
+Utilizando a API de sockets, implemente uma aplicação cliente-servidor de seu interesse e a execute na topologia. Observações:
+• A aplicação é distribuída, o que requer que a parte cliente da aplicação deva rodar no nó cliente,
+enquanto a parte servidora no respectivo nó servidor.
+• O protocolo de transporte (TCP ou UDP) vai depender da aplicação escolhida.
+• O cliente deve comunicar com o servidor sempre a partir do nome do servidor, nunca pelo IP do
+servidor.
+
+======= Nota: 6
+***Comentário: Implementou servidor de arquivo. Faltou a parte cliente. Explicou a lógica da aplicação, faltando alguma profundidade (sincronização dos processos, syscalls envolvidas).

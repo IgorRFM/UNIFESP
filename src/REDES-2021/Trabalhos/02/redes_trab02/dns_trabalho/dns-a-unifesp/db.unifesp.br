@@ -1,0 +1,12 @@
+$TTL 60000
+@	IN	SOA	dns.unifesp.br.	admin.dns.unifesp.br. (
+	1234
+	30
+	15
+	60000
+	0
+	)
+@		IN	NS	dns.unifesp.br.
+dns.unifesp.br.	IN	A	10.0.2.10
+web		IN	A	10.0.2.11
+www		IN	CNAME	web

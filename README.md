@@ -22,4 +22,4 @@
 - [Engenharia de Software]
 - [Computação Gráfica]
 - [Compiladores]
-- [Programação Concorrente e Distribuída](src/PDC-2022)
+- [Programação Concorrente e Distribuída](src/PDC-2022/)

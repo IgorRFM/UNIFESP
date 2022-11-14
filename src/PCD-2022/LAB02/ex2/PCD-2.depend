@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1668379509 source:c:\users\ulisses\documents\codeblocks workspace\pcd-2\main.c
+	<stdlib.h>
+	<omp.h>
+	<stdio.h>
+	<time.h>
+	<assert.h>
+	<string.h>
+	<stdio.h>
+	<pthread.h>
+	"func.h"
+
+1668373786 c:\users\ulisses\documents\codeblocks workspace\pcd-2\func.h
+	<stdio.h>
+	<stdlib.h>
+

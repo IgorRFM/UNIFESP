@@ -1,10 +1,11 @@
 # UNIFESP - Ciências da Computação
-## Códigos desenvolvido nas aulas do curso, por mim, disponibilizado para consulta de alunos posteriores
 
+## Códigos desenvolvido nas aulas do curso, por mim, disponibilizado para consulta de alunos posteriores
 
 > Aqui, haverá todos os códigos que desenvolvi ao longo dos meus semestres no curso de ciências da computação. Talvez eu não poderei disponibilizar todos os materiais por conta de direitos autorais de alguns professores, mas o que for possível estará aqui.
 
 ### Cursos
+
 - [Lógica de Programação]
 - [Algoritmos e Estrutura de Dados I]
 - [Circuitos Digitais]
@@ -22,4 +23,4 @@
 - [Engenharia de Software]
 - [Computação Gráfica]
 - [Compiladores]
-- [Programação Concorrente e Distribuída](src/PDC-2022/)
+- [Programação Concorrente e Distribuída](src/PCD-2022/)

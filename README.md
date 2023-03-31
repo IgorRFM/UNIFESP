@@ -11,12 +11,11 @@
 - [Circuitos Digitais](src/CD-2020/)
 - [Algoritmos e Estrutura de Dados II]
 - [Banco de Dados]
-- [Programação Orientada a Objetos]
-- [Projeto Orientada a Objetos]
+- [Programação Orientada a Objetos](/src/POO-2020/)
+- [Projeto Orientado a Objetos](/src/PROJOO-2021/)
 - [Arquitetura e Organização de Computadores]
 - [Projeto e Análise de Algoritmos](src/PAA-2021/)
 - [Inteligência Artificial](src/IA-2022/)
-- [Projeto Orientado a Objetos]
 - [Teoria dos Grafos](src/TG-2022/)
 - [Sistemas Operacionais](src/SO-2022/)
 - [Redes de Computadores](src/REDES-2021/)

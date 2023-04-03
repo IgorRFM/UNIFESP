@@ -21,5 +21,6 @@
 - [Redes de Computadores](src/REDES-2021/)
 - [Engenharia de Software](src/ProfSoft-2021/)
 - [Computação Gráfica](src/CG-2021/)
+- [Segurança Computacional](src/SEG-COMP-2023/)
 - [Compiladores]
 - [Programação Concorrente e Distribuída](src/PCD-2022/)

@@ -35,7 +35,6 @@ except socket.error.msg:
     sys.exit()
 s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
 
-#gera um ip aleatório como src, usa o up digitado pelo usuário como dest
 dest_ip = socket.gethostbyname(str(sys.argv[1]))
 
 #headedr e modelo do tcp do código citado no começo do arquivo

@@ -1,3 +1,6 @@
+#ifndef _GLOBALS_H_
+#define _GLOBALS_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,7 +22,7 @@ typedef struct tipobuffer {
 
 buffer_texto *buffer;
 
-typedef enum {
+typedef enum tk {
     END_OF_FILE,
     // Reserved Words
     ELSE,
@@ -55,3 +58,56 @@ typedef enum {
     NUM,   // número
     ERROR  // erro
 } TokenType;
+
+#define MAXCHILDREN 3
+
+typedef enum { StmtK,
+               ExpK,
+               Decl } NodeKind;
+typedef enum { IfK,
+               RepeatK,
+               AssignK,
+               CompoundK,
+               ReturnK } StmtKind;
+typedef enum { OpK,
+               ConstK,
+               IdK,
+               TypeK,
+               ArrIdK,
+               CallK,
+               CalcK } ExpKind;
+typedef enum { VarK,
+               FunK,
+               ParamK,
+               ArrParamK,
+               ParamK } DeclKind;
+typedef enum { Void,
+               Integer,
+               IntegerArray } ExpType;
+
+typedef struct treeNode {
+    struct treeNode *child[MAXCHILDREN];
+    struct treeNode *sibling;
+    NodeKind nodekind;
+    int lineno;
+
+    union {
+        StmtKind stmt;
+        ExpKind exp;
+        DeclKind decl;
+    } kind;
+
+    union {
+        TokenType op;
+        TokenType type;
+        int val;
+        char *name;
+        // ArrAttr arr;
+        struct ScopeListRec *scope;
+    } attr;
+
+    ExpType type;
+
+} TreeNode;
+
+#endif

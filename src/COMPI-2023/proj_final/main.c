@@ -56,8 +56,12 @@ int main(int argc, char* argv[]) {
     char tk[100];
     TokenType tok = ERROR;
     printf("lendo...\n");
-    while ((tabledriven(tk, tok, true)) != END_OF_FILE) {
-        }
+    // while ((tabledriven(tk, tok, true)) != END_OF_FILE) {
+    //     }
+    TreeNode* syntaxTree;
+    syntaxTree = parse();
+    printf("\nSyntax tree:\n");
+    printTree(syntaxTree);
 
     // teste_scan();
     // teste_token();

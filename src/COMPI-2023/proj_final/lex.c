@@ -103,7 +103,9 @@ void printtoken(char* tk, TokenType tok) {
             printf("ID, %s\n", tk);
             break;
         case ERROR:
+            printf("\033[0;31m");
             printf("Erro Lexico: '%s', Linha: %d\n", tk, buffer->linha + 1);
+            printf("\033[0m");
             break;
         default:
             printf("Token não reconhecido, %s\n", tk);
@@ -177,10 +179,13 @@ struct {
 Busca melhor do que linear para palavras reservadas
 */
 TokenType busca_reservadas(char* s) {
+    // printf("buscando %s\n", s);
     TokenType str;
     if ((str = find(hash_table, s)) != ERROR) {
+        // printf("Achado:(%d)\n", str);
         return str;
     }
+    // printf("retornando ID\n");
     return ID;
 }
 
@@ -210,192 +215,224 @@ prox_estado = estados[estado_atual][char_lido].
 A função retorna EOF ao atingir o fim do arquivo ou 1 caso contrário.
 
 */
-TokenType tok_atual;
+TokenType tok_atual = ERROR;
 char tokenString_atual[100];
 
 int tabledriven(char tk[100], TokenType tok, bool imprimir) {
-    // printf("buscando token...\n");
     int estado = 0;
-    int c = get_next_char();
+    char c = get_next_char();
 
     int i = 0;
+    int ultimo_estado = 0;
 
     bool flag_save = true;
-    // printf("tk=%s\n", tk);
-
-    while (estado != 5 && estado != 7) {
-        // printf("estado: %d, char: %c(%d)\n", estado, c, c);
-        if (c == EOF) {
-            if (estado == 0) {
-                return EOF;
-            } else {
-                flag_save = false;
-                estado = 5;
-                unget_char();
+    int flag_inicial = 0;
+    while (estado != estado_ACEITA && c != EOF) {
+        // printf("Estado: %d, char: %c (%d)\n", estado, c, c);  // debug
+        estado = estados[estado][c - 32];
+        // printf("novo estado: %d\n", estado);  // debug
+        switch (estado) {
+            case estado_INICIAL:
+                c = get_next_char();
                 break;
-            }
-        }
-        if (c == 10 || c == 9) {
-            if (estado != 0) {
-                // printf("pulando espaço ou quebra de linha ou finalizando em eof\n");
-                flag_save = false;
-                estado = 5;
-            } else {
-                estado = 13;
-            }
-        } else {
-            estado = estados[estado][c - 32];
-            switch (estado) {
-                case 3:
-                    tok = NUM;
-                    flag_save = true;
-                    break;
-                case 4:
-                    flag_save = true;
-                    tok = ID;
-                    break;
-                default:
-                    switch (c) {
-                        case -1:
-                            tok = END_OF_FILE;
-                            estado = 7;
-                            flag_save = false;
+            case estado_ID:
+                tk[i++] = c;
+                tk[i] = '\0';
+                tok = ID;
+                c = get_next_char();
+                break;
+            case estado_NUM:
+                tk[i++] = c;
+                tk[i] = '\0';
+                tok = NUM;
+                c = get_next_char();
+
+                break;
+            case estado_ATTR:
+                tk[i++] = c;
+                tk[i] = '\0';
+                if (c = get_next_char() == '=') {
+                    tk[i++] = c;
+                    tk[i] = '\0';
+                    tok = EQ;
+                } else {
+                    unget_char();
+                    tok = ASSIGN;
+                }
+                break;
+            case estado_COMENTARIO:  // talvez não seja necessário
+                if ((c = get_next_char()) == '*') {
+                    estado = estado_COMENTARIO;
+                    while (true) {
+                        char temp;
+                        if ((temp = get_next_char()) == '*') {
+                            if ((get_next_char()) == '/') {
+                                estado = estado_INICIAL;
+                                break;
+                            }
+                        } else if (temp == EOF) {
+                            printf("(4)Erro léxico. Comentário não fecha. (Linha %d)", buffer->linha + 1);
+                        }
+                    }
+                } else {
+                    unget_char();
+                    tok = OVER;
+                    estado = estado_ACEITA;
+                }
+                break;
+            case estado_ACEITA:
+                // printf("estado aceita %d\n", tok);
+                switch (tok) {
+                    case ID:
+                        tok = busca_reservadas(tk);
+                        // printf("ID: %s, tok: %d\n", tk, tok);  //
+                        break;
+                    case NUM:
+                        // printf("NUM: %s, tok: %d\n", tk, tok);  //
+                        break;
+                    case EQ:
+                        // printf("EQ: %s, tok: %d\n", tk, tok);  //
+                        break;
+                    case ASSIGN:
+                        // printf("ASSIGN: %s, tok: %d\n", tk, tok);  //
+                        break;
+                    case ERROR:
+                        if (flag_inicial == 1) {
+                            printtoken(tk, tok);
                             break;
-                        case '!':
-                            if ((c = get_next_char()) == '=') {
-                                tok = NEQ;
-                                flag_save = true;
-                                estado = 5;
+                        }
+                        if (c == '>') {
+                            tok = GT;
+                            tk[i++] = c;
+                            tk[i] = '\0';
+                            if (get_next_char() == '=') {
+                                tk[i++] = c;
+                                tk[i] = '\0';
+                                tok = GTE;
                             } else {
-                                tok = ERROR;
-                                flag_save = false;
-                                estado = 7;
+                                unget_char();
+                            }
+                        }
+                        if (c == '<') {
+                            tok = LT;
+                            tk[i++] = c;
+                            tk[i] = '\0';
+                            if (get_next_char() == '=') {
+                                tk[i++] = c;
+                                tk[i] = '\0';
+                                tok = LTE;
+                            } else {
+                                unget_char();
                             }
                             break;
-
-                        case '(':
-                            tok = LPAREN;
-                            flag_save = true;
-                            break;
-                        case ')':
-                            tok = RPAREN;
-                            flag_save = true;
-                            break;
-                        case '*':
-                            tok = TIMES;
-                            flag_save = true;
-                            break;
-                        case '+':
-                            tok = PLUS;
-                            flag_save = true;
-                            break;
-                        case ',':
-                            tok = COMMA;
-                            flag_save = true;
-                            break;
-                        case '-':
-                            tok = MINUS;
-                            flag_save = true;
-                            break;
-                        case '/':
-                            tok = OVER;
-                            flag_save = true;
-                            break;
-                        case ';':
-                            tok = SEMI;
-                            flag_save = true;
-                            break;
-                        case '<':
-                            tok = LT;
-                            flag_save = true;
-                            break;
-                        case '=':
-                            tok = EQ;
-                            flag_save = true;
-                            break;
-                        case '>':
-                            tok = GT;
-                            flag_save = true;
-                            break;
-                        case '[':
+                        }
+                        if (c == '[') {
                             tok = LBRACKET;
-                            flag_save = true;
+                            tk[i++] = c;
+                            tk[i] = '\0';
                             break;
-                        case ']':
-                            tok = RBRACKET;
-                            flag_save = true;
-                            break;
-                        case '{':
-                            tok = LBRACE;
-                            flag_save = true;
-                            break;
-                        case '}':
-                            tok = RBRACE;
-                            flag_save = true;
-                            break;
+                        }
+                        switch (c) {
+                            case '-':
+                                tok = MINUS;
+                                break;
+                            case '+':
+                                tok = PLUS;
+                                break;
+                            case '*':
+                                tok = TIMES;
+                                break;
+                            case '/':
+                                tok = OVER;
+                                break;
+                            case ';':
+                                tok = SEMI;
+                                break;
+                            case ',':
+                                tok = COMMA;
+                                break;
+                            case '(':
+                                tok = LPAREN;
+                                break;
+                            case ')':
+                                tok = RPAREN;
+                                break;
+                            case '[':
+                                tok = LBRACKET;
+                                break;
+                            case ']':
+                                tok = RBRACKET;
+                                break;
+                            case '{':
+                                tok = LBRACE;
+                                break;
+                            case '}':
+                                tok = RBRACE;
+                                break;
+                            case '=':
+                                tok = EQ;
+                                if (get_next_char() == '=') {
+                                    tk[i++] = c;
+                                    tk[i] = '\0';
+                                    tok = EQ;
+                                } else {
+                                    unget_char();
+                                }
+                                break;
+                            default:
+                                // printf("(2)Erro lexico: %s, Linha: %d\n", tk, buffer->linha + 1);
+                                tok = ERROR;
+                                flag_inicial = 1;
+                                break;
+                        }
+                        tk[i++] = c;
+                        tk[i] = '\0';
+                        // printf("%s (%d) está em estado aceita\n", tk, tok);
+                        break;
 
-                        default:
-                            flag_save = false;
-                            break;
-                    }
-            }
-        }
-        if (estado == 10) {
-            unget_char();
-            estado = 5;
-        } else if (estado == 13) {
-            estado = 0;
-            c = get_next_char();
-        } else if (estado == 5) {
-            // printf("estado 5 (flag: %d)\n", flag_save);
-            if (flag_save) {
-                tk[i++] = c;
-                tk[i] = '\0';
-            }
-            break;
+                    default:
+                        // printf("(1)Erro lexico: %s, Linha: %d\n", tk, buffer->linha + 1);
+                        tok = ERROR;
+                        flag_inicial = 1;
+                        break;
+                }
 
-        } else if (estado == 7) {
-            tk[i++] = c;
-            tk[i] = '\0';
-            break;
-        } else {
-            if (flag_save) {
-                tk[i++] = c;
-                tk[i] = '\0';
-            }
-            c = get_next_char();
+                // printf("imprimindo: %s %d \n", tk, tok);  // debug
+                if (tok == ID) {
+                    tok = busca_reservadas(tk);
+                }
+                if (imprimir)
+                    printtoken(tk, tok);
+
+                return tok;
+                break;
+            default:
+                if (estado == 10 || estado == 7) {
+                    // printf("estado 10 ou 7\n");
+                    unget_char();
+                    estado = estado_ACEITA;
+                    break;
+                } else if (estado == 13) {
+                    // come o char que acabou de pegar
+                    //  printf("estado 13\n");
+                } else {
+                    c = get_next_char();
+                }
+
+                // printf("(3)Erro léxico: %s, Linha: %d\n", tk, buffer->linha + 1);
+                break;
         }
     }
-    // printf("aaaaaaaaaaaaa\n");
-    if (estado == 5) {
-        // printf("estado 5 (flag: %d)\n", flag_save);
+
+    if (estado == estado_ACEITA) {
         if (tok == ID) {
             tok = busca_reservadas(tk);
         }
-        tok_atual = tok;
-        strcpy(tokenString_atual, tk);
-
-        if (imprimir) {
+        if (imprimir)
             printtoken(tk, tok);
-        } else {
-            if (tok == ERROR) {
-                printf("Erro lexico: %s, Linha: %d\n", tk, buffer->linha + 1);
-            }
-        }
-        // printf("finlizou?\n");
-    } else if (estado == 7) {
-        printf("\033[0;31m");
-        printf("Erro lexico (%s), linha: %d\n", tk, buffer->linha + 1);
-        printf("\033[0m");
+        return tok;
     }
-    // printf("%s\n", tk);
-    // if (c == EOF) {
-    //     printf("fim.\n");
-    //     return EOF;
-    // } else {
-    //     return 1;
-    // }
-    return 1;
+    return 0;
 }
 
 // /*
@@ -579,9 +616,94 @@ int tabledriven(char tk[100], TokenType tok, bool imprimir) {
 // }
 
 int ajusta_token(TokenType token) {
-    if (token == NUM) {
-        return tNUM;
-    } else if (token == PLUS) {
-        return '+';
+    switch (token) {
+        case NUM:
+            return t_NUM;
+            break;
+        case ID:
+            return t_ID;
+            break;
+        case IF:
+            return t_IF;
+            break;
+        case ELSE:
+            return t_ELSE;
+            break;
+        case INT:
+            return t_INT;
+            break;
+        case RETURN:
+            return t_RETURN;
+            break;
+        case VOID:
+            return t_VOID;
+            break;
+        case WHILE:
+            return t_WHILE;
+            break;
+        case PLUS:
+            return '+';
+            break;
+        case MINUS:
+            return '-';
+            break;
+        case TIMES:
+            return '*';
+            break;
+        case OVER:
+            return '/';
+            break;
+        case LT:
+            return t_LT;
+            break;
+        case LTE:
+            return t_LTE;
+            break;
+        case GT:
+            return t_GT;
+            break;
+        case GTE:
+            return t_GTE;
+            break;
+        case EQ:
+            return t_EQ;
+            break;
+        case NEQ:
+            return t_NEQ;
+            break;
+        case ASSIGN:
+            return '=';
+            break;
+        case SEMI:
+            return ';';
+            break;
+        case COMMA:
+            return ',';
+            break;
+        case LPAREN:
+            return '(';
+            break;
+        case RPAREN:
+            return ')';
+            break;
+        case LBRACKET:
+            return '[';
+            break;
+        case RBRACKET:
+            return ']';
+            break;
+        case LBRACE:
+            return '{';
+            break;
+        case RBRACE:
+            return '}';
+            break;
+
+        case END_OF_FILE:
+            return 0;
+            break;
+
+        default:
+            break;
     }
 }

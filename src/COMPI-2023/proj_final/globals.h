@@ -26,38 +26,38 @@ buffer_texto *buffer;
 typedef enum {
     END_OF_FILE,
     // Reserved Words
-    IF = 258,       /* IF  */
-    ELSE = 259,     /* ELSE  */
-    INT = 260,      /* INT  */
-    RETURN = 261,   /* RETURN  */
-    VOID = 262,     /* VOID  */
-    WHILE = 263,    /* WHILE  */
-    ID = 264,       /* ID  */
-    NUM = 3,        /* NUM  */
-    LT = 266,       /* LT  */
-    LE = 267,       /* LE  */
-    GT = 268,       /* GT  */
-    GE = 269,       /* GE  */
-    EQ = 270,       /* EQ  */
-    NEQ = 271,      /* NE  */
-    SEMI = 272,     /* SEMI  */
-    LPAREN = 273,   /* LPAREN  */
-    RPAREN = 274,   /* RPAREN  */
-    LBRACE = 275,   /* LBRACE  */
-    RBRACE = 276,   /* RBRACE  */
-    LBRACKET = 277, /* LBRACKET  */
-    RBRACKET = 278, /* RBRACKET  */
-    PLUS = 279,     /* PLUS  */
-    MINUS = 280,    /* MINUS  */
-    TIMES = 281,    /* TIMES  */
-    OVER = 282,     /* OVER  */
-    COMMA = 283,    /* COMMA  */
-    ASSIGN = 284,   /* ASSIGN  */
-    ERROR = 285,    /* ERROR  */
-    LTE = 286,      /* LTE  */
-    GTE = 287,      /* GTE  */
-    SCOMMENT = 289, /* SCOMMENT  */
-    ECOMMENT = 290  /* ECOMMENT  */
+    IF,       /* IF  */
+    ELSE,     /* ELSE  */
+    INT,      /* INT  */
+    RETURN,   /* RETURN  */
+    VOID,     /* VOID  */
+    WHILE,    /* WHILE  */
+    ID,       /* ID  */
+    NUM,      /* NUM  */
+    LT,       /* LT  */
+    LE,       /* LE  */
+    GT,       /* GT  */
+    GE,       /* GE  */
+    EQ,       /* EQ  */
+    NEQ,      /* NE  */
+    SEMI,     /* SEMI  */
+    LPAREN,   /* LPAREN  */
+    RPAREN,   /* RPAREN  */
+    LBRACE,   /* LBRACE  */
+    RBRACE,   /* RBRACE  */
+    LBRACKET, /* LBRACKET  */
+    RBRACKET, /* RBRACKET  */
+    PLUS,     /* PLUS  */
+    MINUS,    /* MINUS  */
+    TIMES,    /* TIMES  */
+    OVER,     /* OVER  */
+    COMMA,    /* COMMA  */
+    ASSIGN,   /* ASSIGN  */
+    ERROR,    /* ERROR  */
+    LTE,      /* LTE  */
+    GTE,      /* GTE  */
+    SCOMMENT, /* SCOMMENT  */
+    ECOMMENT  /* ECOMMENT  */
 } TokenType;
 
 bool Error;

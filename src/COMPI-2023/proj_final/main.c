@@ -1,9 +1,9 @@
-
 #include <locale.h>
+
 /* hash */
 #include "globals.h"
 /*tabela*/
-
+#include "bison.tab.c"
 #include "hash.c"
 #include "tabela.c"
 /**/
@@ -40,8 +40,6 @@ Arquivo com as declarações e procedimentos para o funcionamento do buffer de l
 #include "util.h"
 int error = FALSE;
 
-#include "bison.tab.c"
-
 int main(int argc, char* argv[]) {
     printf("inciando...\n");
     setlocale(LC_ALL, "Portuguese");
@@ -66,15 +64,20 @@ int main(int argc, char* argv[]) {
     inicializa_hash();
 
     cria_tabela();
+    print_hash_table(hash_table);
 
     char tk[100];
+    tk[0] = '\0';
+    printf("strlen: %d\n", strlen(tk));
     TokenType tok = ERROR;
-    printf("lendo...\n");
-    // while ((tabledriven(tk, tok, true)) != END_OF_FILE) {
+    // printf("lendo...\n");
+    // while ((tabledriven(tk, tok, true)) != EOF) {
     // }
+    // printf("fim.");
     TreeNode* syntaxTree;
 
-    printf("começando parser...\n");
+    // printf("começando parser...\n");
+
     yyparse();
     // syntaxTree = parse();
     // printf("parser finalizado...\n");

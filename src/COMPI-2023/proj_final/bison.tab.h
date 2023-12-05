@@ -54,24 +54,27 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    tNUM = 258                     /* tNUM  */
+    t_IF = 258,                    /* t_IF  */
+    t_ELSE = 259,                  /* t_ELSE  */
+    t_INT = 260,                   /* t_INT  */
+    t_RETURN = 261,                /* t_RETURN  */
+    t_VOID = 262,                  /* t_VOID  */
+    t_WHILE = 263,                 /* t_WHILE  */
+    t_ID = 264,                    /* t_ID  */
+    t_NUM = 265,                   /* t_NUM  */
+    t_LT = 266,                    /* t_LT  */
+    t_LTE = 267,                   /* t_LTE  */
+    t_GT = 268,                    /* t_GT  */
+    t_GTE = 269,                   /* t_GTE  */
+    t_EQ = 270,                    /* t_EQ  */
+    t_NEQ = 271                    /* t_NEQ  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 19 "bison.y"
-
-    float f;
-    char ch;
-
-#line 72 "bison.tab.h"
-
-};
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

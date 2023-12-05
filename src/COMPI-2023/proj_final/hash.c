@@ -45,9 +45,11 @@ void insert(ht* tabela, char* key, TokenType tok) {
 }
 
 TokenType find(ht* tabela, char* key) {
+    // printf("Procurando %s...\n", key);
     int indice = hash_key(key) % 7;
     ht_entry* entry = tabela->entries[indice];
     while (entry != NULL) {
+        // printf("Comparando %s com %s", entry->key, key);
         if (strcmp(entry->key, key) == 0) {
             return entry->tok;
         }

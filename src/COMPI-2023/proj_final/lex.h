@@ -27,3 +27,5 @@ void unget_next_char();
 TokenType busca_reservadas(char* s);
 
 int tabledriven(char* tk, TokenType tok, bool print);
+
+int ajusta_token(TokenType token);

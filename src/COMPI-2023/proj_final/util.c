@@ -1,6 +1,8 @@
 #include "util.h"
 
-#include "globals.h"
+#include "lex.h"
+
+// #include "globals.h"
 
 TreeNode *newStmtNode(StmtKind kind) {
     TreeNode *t = (TreeNode *)malloc(sizeof(TreeNode));
@@ -50,7 +52,7 @@ TreeNode *newDeclNode(DeclKind kind) {
             t->child[i] = NULL;
         }
         t->sibling = NULL;
-        t->nodekind = Decl;
+        t->nodekind = DeclK;
         t->kind.decl = kind;
         t->lineno = buffer->linha;
     }
@@ -64,6 +66,7 @@ char *copyString(char *s) {
 }
 
 void printTree(TreeNode *tree) {
+    printf("printando árvore");
     int i;
     int j;
     for (i = 0; i < 3; i++) {
@@ -95,7 +98,7 @@ void printTree(TreeNode *tree) {
             switch (tree->kind.exp) {
                 case OpK:
                     printf("Op: ");
-                    printToken(tree->attr.op, "\0");
+                    printtoken("\0", tree->attr.op);
                     break;
                 case ConstK:
                     printf("Const: %d\n", tree->attr.val);
@@ -105,7 +108,7 @@ void printTree(TreeNode *tree) {
                     break;
                 case TypeK:
                     printf("Type: ");
-                    printToken(tree->attr.type, "\0");
+                    printtoken("\0", tree->attr.type);
                     break;
                 case ArrIdK:
                     printf("ArrId: %s\n", tree->attr.name);
@@ -115,13 +118,13 @@ void printTree(TreeNode *tree) {
                     break;
                 case CalcK:
                     printf("Calc: ");
-                    printToken(tree->attr.op, "\0");
+                    printtoken("\0", tree->attr.op);
                     break;
                 default:
                     printf("Unknown ExpNode kind\n");
                     break;
             }
-        } else if (tree->nodekind == Decl) {
+        } else if (tree->nodekind == DeclK) {
             switch (tree->kind.decl) {
                 case VarK:
                     printf("Var: %s\n", tree->attr.name);

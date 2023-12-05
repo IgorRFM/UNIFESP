@@ -1,7 +1,7 @@
 #ifndef _PARSE_H
 #define _PARSE_H
-#include "globals.h"
+// #include "globals.h"
 
-TreeNode * parse(void);
+// TreeNode* parse(void);
 
 #endif

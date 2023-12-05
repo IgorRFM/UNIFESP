@@ -5,7 +5,7 @@
 #include <string.h>
 #ifndef GLOBALS_H
 #define GLOBALS_H
-#include "globals.h"
+// #include "globals.h"
 #endif
 #include "lex.h"
 

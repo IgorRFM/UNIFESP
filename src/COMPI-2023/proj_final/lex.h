@@ -17,4 +17,13 @@
 
 char get_next_char();
 
-void print_token(char* tk, TokenType tok);
+void printtoken(char* tk, TokenType tok);
+
+bool digito(char c);
+bool letra(char c);
+
+void unget_next_char();
+
+TokenType busca_reservadas(char* s);
+
+int tabledriven(char* tk, TokenType tok, bool print);

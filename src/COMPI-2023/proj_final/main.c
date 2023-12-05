@@ -1,7 +1,18 @@
 
 #include <locale.h>
+/* hash */
+#include "globals.h"
+/*tabela*/
 
+#include "hash.c"
 #include "tabela.c"
+/**/
+#include "lex.c"
+/**/
+#include "util.c"
+
+/**/
+
 /* ----- Analisador Léxico ----- */
 /*
 Arquivo com as declarações e procedimentos para o funcionamento da tabela hash para palavras reservadas.
@@ -21,19 +32,22 @@ print_hash_table: função que recebe uma tabela hash e imprime todas as entrada
 
 inicializa_hash: função que inicializa a tabela hash. Ela aloca memória para a tabela e para o vetor de entradas. Em seguida, inicializa todas as entradas com NULL e insere todas as palavras reservadas na tabela.
 */
-#include "hash.c"
-#include "lex.c"
+// #include "lex.c"
 /*
 Arquivo com as declarações e procedimentos para o funcionamento do buffer de leitura do arquivo de entrada.
 */
 #include "funcs.c"
+#include "util.h"
 int error = FALSE;
 
+#include "bison.tab.c"
+
 int main(int argc, char* argv[]) {
+    printf("inciando...\n");
     setlocale(LC_ALL, "Portuguese");
 
     if (argc != 2) {
-        printf("Quantidade de parâmetros errada. Execute da seguinte forma: \n %s <nome do arquivo>\n", argv[0]);
+        printf("Quantidade de params. errada. Execute da seguinte forma: \n %s <nome do arquivo>\n", argv[0]);
         exit(1);
     } else {
         printf("Executando sob o Arquivo: %s\n", argv[1]);
@@ -57,11 +71,15 @@ int main(int argc, char* argv[]) {
     TokenType tok = ERROR;
     printf("lendo...\n");
     // while ((tabledriven(tk, tok, true)) != END_OF_FILE) {
-    //     }
+    // }
     TreeNode* syntaxTree;
-    syntaxTree = parse();
-    printf("\nSyntax tree:\n");
-    printTree(syntaxTree);
+
+    printf("começando parser...\n");
+    yyparse();
+    // syntaxTree = parse();
+    // printf("parser finalizado...\n");
+    // printf("\nSyntax tree:\n");
+    // printTree(syntaxTree);
 
     // teste_scan();
     // teste_token();

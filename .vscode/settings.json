@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"funcs.h": "c",
-		"globals.h": "c"
+		"globals.h": "c",
+		"bison.tab.h": "c"
 	}
 }

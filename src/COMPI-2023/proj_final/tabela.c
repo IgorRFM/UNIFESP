@@ -1,8 +1,10 @@
+
+#include <stdbool.h>
 #include <stdio.h>
 
 int estados[14][96];
 
-void cria_tabela() {
+void cria_tabela(bool imprimir) {
     printf("Criando tabela...\n");
     char* filename = "transicoes.tsv";
     FILE* tabela = fopen(filename, "r");
@@ -16,7 +18,6 @@ void cria_tabela() {
         d = 0;
         total = 0;
         while (c != '\n' && c != EOF) {
-            // printf("%c ", c);
             if (c != 9) {
                 d = (d * 10) + (c - 48);
             } else {  // NÃO DIGITO
@@ -24,25 +25,23 @@ void cria_tabela() {
                 d = 0;
                 estados[i][j] = total;
                 j++;
-                // if (i == 0) {
-                //     printf("total: %d, (indo do estado 0 para o %d ao ler %c)\n", total, total, j + 31);
-                // }
+
                 total = 0;
             }
-            // printf("inserindo %d em (%d,%d)\n", c - 48, i, j);
             c = fgetc(tabela);
         }
-        // printf("\n");
         c = fgetc(tabela);
         i++;
     }
 
-    // printf("Printando tabela (ex: %d):\n", estados[0][0]);
+    if (imprimir) {
+        printf("Printando tabela:\n");
 
-    // for (i = 4; i < 5; i++) {
-    //     for (j = 0; j < 95; j++) {
-    //         printf("(%d,%d) %d \n", i, j, estados[i][j]);
-    //     }
-    //     printf("\n");
-    // }
+        for (i = 0; i < 13; i++) {
+            for (j = 0; j < 95; j++) {
+                printf("%d ,", estados[i][j]);
+            }
+            printf("\n");
+        }
+    }
 }

@@ -11,7 +11,6 @@
 #define tam_buffer 50
 
 FILE *arqv_ptr;
-FILE *code;
 
 typedef struct tipobuffer {
     char *buf;
@@ -64,53 +63,53 @@ bool Error;
 
 #define MAXCHILDREN 3
 
-typedef enum { StmtK,
-               ExpK,
-               DeclK } NodeKind;
-typedef enum { IfK,
-               RepeatK,
-               AssignK,
-               CompoundK,
-               ReturnK } StmtKind;
-typedef enum { OpK,
-               ConstK,
-               IdK,
-               TypeK,
-               ArrIdK,
-               CallK,
-               CalcK } ExpKind;
-typedef enum { VarK,
-               FunK,
-               ArrParamK,
-               ArrVarK,
-               ParamK } DeclKind;
-typedef enum { Void,
-               Integer,
-               IntegerArray } ExpType;
+// typedef enum { StmtK,
+//                ExpK,
+//                DeclK } NodeKind;
+// typedef enum { IfK,
+//                RepeatK,
+//                AssignK,
+//                CompoundK,
+//                ReturnK } StmtKind;
+// typedef enum { OpK,
+//                ConstK,
+//                IdK,
+//                TypeK,
+//                ArrIdK,
+//                CallK,
+//                CalcK } ExpKind;
+// typedef enum { VarK,
+//                FunK,
+//                ArrParamK,
+//                ArrVark,
+//                 } DeclKind;
+// typedef enum { Void,
+//                Integer,
+//                IntegerArray } ExpType;
 
-typedef struct treeNode {
-    struct treeNode *child[MAXCHILDREN];
-    struct treeNode *sibling;
-    NodeKind nodekind;
-    int lineno;
+// typedef struct treeNode {
+//     struct treeNode *child[MAXCHILDREN];
+//     struct treeNode *sibling;
+//     NodeKind nodekind;
+//     int lineno;
 
-    union {
-        StmtKind stmt;
-        ExpKind exp;
-        DeclKind decl;
-    } kind;
+//     union {
+//         StmtKind stmt;
+//         ExpKind exp;
+//         DeclKind decl;
+//     } kind;
 
-    union {
-        TokenType op;
-        TokenType type;
-        int val;
-        char *name;
-        // ArrAttr arr;
-        struct ScopeListRec *scope;
-    } attr;
+//     union {
+//         TokenType op;
+//         TokenType type;
+//         int val;
+//         char *name;
+//         // ArrAttr arr;
+//         struct ScopeListRec *scope;
+//     } attr;
 
-    ExpType type;
-    int size;
-} TreeNode;
+//     ExpType type;
+//     int size;
+// } TreeNode;
 
 #endif

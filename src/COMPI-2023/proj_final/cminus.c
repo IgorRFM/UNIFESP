@@ -1,6 +1,6 @@
 int x[10];
 int minloc(int a[], int low, int high) {
-    int i;
+    ~~int i;
     int x;
     int k;
     k = low;
@@ -10,7 +10,7 @@ int minloc(int a[], int low, int high) {
         if (a[i] < x) {
             x = a[i];
             k = i;
-        }
+        }:
         i = i + 1;
     }
     return k;

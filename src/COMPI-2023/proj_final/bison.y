@@ -1,21 +1,21 @@
 %{
-#define YYSTYPE TreeNode *
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #define YYPARSER 
 int yyerror(char * message);
+
 #include "lex.h"
-#include "util.h"
+
 static int yylex(void);
 static int yywrap(void);
 
 TokenType toktok = ERROR;
 extern char tokenString_atual[100];
-static int savedNumber;
-static TreeNode* aas;
+// static int savedNumber;
+// static TreeNode* aas;
 
-// #include "defit_NEQs.h"
 
 %}
 
@@ -26,340 +26,237 @@ static TreeNode* aas;
 
 %%
 
-/**************************/
-/* Grammar rut_LTEs          */
-/**************************/
 
 t_programa : t_declList{
-                printTree(aas);
-                aas=$1;
                 printf("Programa\n");
+                $$ = $1;
                 }
 
 t_declList : t_declList t_decl 
             { printf("decl list\n");
-              TreeNode * t = $1;
-              if( t == NULL){
-                $$ = $2;
-            }else{
-              while(t->sibling != NULL){ // percorre ate o ut_LTimo irmao
-                t = t->sibling;
-              }
-              t->sibling = $2;
-              $$ = $1;
+              $$ = $1 + $2;
             }
-            }
-         | t_decl {$$ = $1; printf("decl\n");}
+         | t_decl {
+         printf("decl\n");
+         $$ = $1;}
          ;
 
-t_decl : t_vardecl {$$ = $1;
-printf("decl\n");}
-     | t_funDecl {$$ = $1;printf("decl\n");}
+t_decl : t_vardecl {$$ = $1; 
+printf("v_decl\n");}
+     | t_funDecl {$$ = $1;
+      printf("f_decl\n");}
      ;
 
 t_vardecl : t_tipoEspec t_ID ';' {
-  printf("var decl\n");
-  $$ = newDeclNode(VarK);
-                                  $$->child[0] = $1;
-                                  $$->attr.name = buffer->buf;
-                                  $$->lineno = buffer->linha;
-                                  }
+            printf("var decl\n");
+                            $$ = $1 + $2;      }
         | t_tipoEspec t_ID '[' t_NUM ']' ';' {
           printf("[var decl]\n");
-               $$ = newDeclNode(ArrVarK);
-                    $$->child[0] = $1;
-                    $$->lineno = buffer->linha;
-                    $$->type = IntegerArray;
-                    $$->attr.name = buffer->buf;
-                    $$->attr.val = savedNumber;}
+             $$ = $1 + $2 + $3 + $4 + $5 + $6;
+                    }
         ;
 
-t_tipoEspec : t_INT {$$ = newExpNode(TypeK);
-                    $$->type = Integer;
+t_tipoEspec : t_INT {$$ = $1;
                     printf("Tipo espec. INT\n");}
           | t_VOID{
             printf("Tipo espec. VOID\n");
-            $$ = newExpNode(TypeK);
-                    $$->type = Void;}
+            $$ = $1;
+            }
           ;
 
 t_funDecl : t_tipoEspec t_ID '(' t_params ')' t_compdecl {
   printf("fun decl\n");
-              $$ = newDeclNode(FunK);
-              $$->lineno = buffer->linha;
-              $$->attr.name = buffer->buf;
-              $$->child[0] = $1;
-              $$->child[1] = $4;
-              $$->child[2] = $6;
+             $$ = $1 + $2 + $3 + $4 + $5;
             }
+            |
           ;
 
-t_params : t_paramList {$$ = $1; printf("params\n");};
+t_params : t_paramList {printf("params\n");$$ = $1;}|;
 
 t_paramList : t_paramList ',' t_param {
             printf("param list\n");
-            TreeNode *t = $1;
-            while(t->sibling != NULL){ // percorre ate o ut_LTimo irmao
-              t = t->sibling;
+            $$ = $1+$2+$3;
+            
             }
-            t->sibling = $3;
-            $$ = $1;
-            }
-            | t_param {$$ = $1;}
+            | t_param {printf("param\n");$$ = $1;}
             ;
 
 t_param : t_tipoEspec t_ID {
         printf("param\n");
-          $$ = newDeclNode(ParamK);
-          $$->child[0] = $1;
-          $$->attr.name = buffer->buf;
+          $$ = $1+$2;
           }
           | t_tipoEspec t_ID '[' ']' {
+            $$ = $1 + $2;
             printf("param\n");
-            $$ = newDeclNode(ArrParamK);
-            $$->child[0] = $1;
-            strcpy($$->attr.name, buffer->buf);
           }
           ;
 t_compdecl : '[' t_localdecl t_stmtlista ']'
                 { 
+                  $$ = $1 + $2 + $3 + $4;
                   printf("comp decl\n");
-                  $$ = newStmtNode(CompoundK);
-                  $$->child[0] = $2;
-                  $$->child[1] = $3;
+
                 }
               ;
 
 t_localdecl : t_localdecl t_vardecl
                      {
+                      $$ = $1 + $2;
                       printf("local dcl\n"); 
-                      TreeNode * t = $1;
-                       if (t != NULL) {
-                         while (t->sibling != NULL) { t = t->sibling; }
-                         t->sibling = $2;
-                         $$ = $1;
-                       } else {
-                         $$ = $2;
-                       }
+
                      }
-                   | { $$ = NULL; }
-                   ;
 
 t_stmtlista : t_stmtlista t_stmt
-                 {
+                 {$$ = $1 + $2;
                   printf("stmt lista\n "); 
-                  TreeNode * t = $1;
-                   if (t != NULL) {
-                     while (t->sibling != NULL) { t = t->sibling; }
-                    t->sibling = $2;
-                    $$ = $1;
-                   } else {
-                     $$ = $2;
-                   }
                  }
-               | { $$ = NULL; }
-               ;
+               
 
-t_stmt : t_expdecl { $$ = $1; printf("stmt exp\n" );}
-          | t_compdecl { $$ = $1; printf("stmt comp\n");}
+t_stmt : t_expdecl { $$ = $1;printf("stmt exp\n" );}
+          | t_compdecl {$$ = $1;printf("stmt comp\n");}
           | t_selecdecl { $$ = $1; printf("stmt selec\n");}
-          | t_iterdecl { $$ = $1; printf("stmt iter\n");}
-          | t_retornodecl { $$ = $1; printf("stmt retorno\n");}
+          | t_iterdecl { $$ = $1;printf("stmt iter\n");}
+          | t_retornodecl {$$ = $1;printf("stmt retorno\n");}
           ;
 
-t_expdecl : t_exp ';' { $$ = $1; printf(";");}
-                | ';' { $$ = NULL; printf(";");}
+t_expdecl : t_exp ';' { printf(";"); $$ = $1;}
+                | ';' {  printf(";");$$ = $1;}
                 ;
 
 t_selecdecl : t_IF '(' t_exp ')' t_stmt
                  { 
                   printf( "if(exp)algo\n");
-                  $$ = newStmtNode(IfK);
-                   $$->child[0] = $3;
-                   $$->child[1] = $5;
+                  $$ = $1 + $2 + $3 + $4 + $5;
                  }
                | t_IF '(' t_exp ')' t_stmt t_ELSE t_stmt
                  { printf( "if(exp)algo else algo\n");
-                  $$ = newStmtNode(IfK);
-                   $$->child[0] = $3;
-                   $$->child[1] = $5;
-                   $$->child[2] = $7;
+                 $$ = $1 + $2 + $3 + $4 + $5 + $6 + $7;
+                  
                  }
                ;
 
 t_iterdecl : t_WHILE '(' t_exp ')' t_stmt
                  { 
+                  $$ = $1 + $2 + $3 + $4 + $5;
                     printf( "while\n");
                     
-                  $$ = newStmtNode(RepeatK);
-                   $$->child[0] = $3;
-                   $$->child[1] = $5;
+                  
                  }
                ;
 
 t_retornodecl : t_RETURN ';'
-              { 
+              {  $$ = $1 + $2;
                 printf( "return\n");
-                $$ = newStmtNode(ReturnK);
-                $$->type = Void;
               }
             | t_RETURN t_exp ';'
-              { 
+              {  $$ = $1 + $2;
                 printf( "return\n");
-                $$ = newStmtNode(ReturnK);
-                $$->child[0] = $2;
               }
             ;
 
 t_exp : t_VAR '=' t_exp
-             { 
+             {  $$ = $1 + $2;
               printf( "exp\n");
-              $$ = newStmtNode(AssignK);
-               $$->child[0] = $1;
-               $$->child[1] = $3;
              }
-           | t_simpleexp { 
+           | t_simpleexp { $$ = $1;
             printf( "exp_simpleexp\n");
-            $$ = $1; }
+            }
            ;
 
 t_VAR : t_ID
-      {
+      {$$ = $1;
         printf( "var\n");
-         $$ = newExpNode(IdK);
-        $$->attr.name = buffer->buf;
       }
     |'[' t_ID ']'{
       printf( "arr\n");
-        $$ = newExpNode(ArrIdK);
-        $$->attr.name = buffer->buf;
+       $$ = $2;
       } '[' t_exp ']'
-      {
+      {$$ = $2;
         printf("[var]\n");
-        $$ = $2;
-        $$->child[0] = $4;
       }
     ;
 
 t_simpleexp : t_somaexp t_comp t_somaexp
-                    { 
+                    { $$ = $1 + $2 + $3;
                       printf( "simpleexp\n");
-                      $$ = newExpNode(CalcK);
-                      $$->child[0] = $1;
-                      $$->child[1] = $2;
-                      $$->child[2] = $3;
                     }
-                  | t_somaexp { 
-                    printf( "simpt_LTEsexp_termo\n");
-                    $$ = $1; }
+                  | t_somaexp { $$ = $1;
+                    printf( "simpt_LTEsexp_termo\n");}
                   ;
 
 t_comp : t_LT
         {
-          printf( "lt\n");
-           $$ = newExpNode(OpK);
-          $$->attr.op = t_LT;
+          printf( "lt\n");$$ = $1;
         }
       | t_LTE
         {
-          printf( "lte\n");
-           $$ = newExpNode(OpK);
-          $$->attr.op = t_LTE;
+          printf( "lte\n");$$ = $1;
         }
       | t_GT
         {
-          printf( "gt\n");
-           $$ = newExpNode(OpK);
-          $$->attr.op = t_GT;
+          printf( "gt\n");$$ = $1;
         }
       | t_GTE
         {
-          printf( "gte\n");
-           $$ = newExpNode(OpK);
-          $$->attr.op = t_GTE;
+          printf( "gte\n");$$ = $1;
         }
       | t_EQ
-        { printf( "eq\n");
-          $$ = newExpNode(OpK);
-          $$->attr.op = t_EQ;
+        { printf( "eq\n");$$ = $1;
         }
       | t_NEQ
-        { 
+        { $$ = $1;
           printf( "neq\n");
-          $$ = newExpNode(OpK);
-          $$->attr.op = t_NEQ;
         }
       ;
 
 t_somaexp : t_somaexp t_soma t_termo
-                      { 
+                      { $$ = $1 + $2 + $3;
                         printf( "somaexp\n");
-                        $$ = newExpNode(CalcK);
-                        $$->child[0] = $1;
-                        $$->child[1] = $2;
-                        $$->child[2] = $3;
                       }
-                    | t_termo {
+                    | t_termo { $$ = $1;
                       printf( "somaexp_termo\n");
-                       $$ = $1; }
+                        }
                     ;
 
 t_soma : '+'
-        { 
+        { $$ = $1;
           printf("mais\n");
-          $$ = newExpNode(OpK);
-          $$->attr.op = PLUS;
         }
       | '-'
-        { 
+        { $$ = $1;
           printf("menos\n");
-          $$ = newExpNode(OpK);
-          $$->attr.op = MINUS;
         }
       ;
 
 t_termo : t_termo t_mult t_fator
-       {
+       {$$ = $1 + $2 + $3;
         printf("termo\n") ;
-        $$ = newExpNode(CalcK);
-         $$->child[0] = $1;
-         $$->child[1] = $2;
-         $$->child[2] = $3;
        }
-     | t_fator { $$ = $1; }
+     | t_fator { $$ = $1; printf( "t_fator\n"); }
      ;
 
 t_mult : '*'
-        {
+        {$$ = $1;
           printf("mult\n");
-           $$ = newExpNode(OpK);
-          $$->attr.op = TIMES;
         }
       | '/'
-        { 
+        { $$ = $1;
           printf("div\n");
-          $$ = newExpNode(OpK);
-          $$->attr.op = OVER;
         }
       ;
 
-t_fator : '(' t_exp ')' { $$ = $2; printf( "(fator)\n");}
-       | t_VAR { $$ = $1; printf( "fator_var\n");}
-       | t_ativ { $$ = $1; printf( "fator_ativ\n"); }
+t_fator : '(' t_exp ')' {$$ = $2; printf( "(fator)\n");}
+       | t_VAR {$$ = $1; printf( "fator_var\n");}
+       | t_ativ {$$ = $1; printf( "fator_ativ\n"); }
        | t_NUM
-         { $$ = newExpNode(ConstK);
-           $$->type = Integer;
-           $$->attr.val = atoi(buffer->buf);
-         };
-       ;
+         { $$ = $1; printf ("fator_num\n"); }
+         ;
+       
 
-t_ativ : t_ID {
+t_ativ : t_ID {$$ = $1;
         printf("ativ\n");
-         $$ = newExpNode(CallK);
-         $$->attr.name = buffer->buf;
-         } '(' t_args ')' {
-           $$ = $2;
-           $$->child[0] = $4;
+         } 
+         | '(' t_args ')' {$$ = $1;
+          printf("ativ_args\n");
        }
      ;
 
@@ -369,46 +266,19 @@ t_args : t_arglista { $$ = $1; printf("args\n"); }
 
 t_arglista : t_arglista ',' t_exp
            {
-            printf("arglista\n");
-            TreeNode * t = $1;
-             if (t != NULL) {
-               while (t->sibling != NULL) { t = t->sibling; }
-               t->sibling = $3;
-               $$ = $1;
-             } else {
-               $$ = $3;
-             }
+            $$ = $1;
+           printf( "arglista\n");
            }
-         | t_exp { $$ = $1; }
+         | t_exp {
+          $$ = $1;
+           printf( "arglista\n"); }
          ;
 
 
 
 
-// S : tE           {printf("%f\n",$1); exit(0);}
-//   ;
-
-// tE : tE '+' tT     {$$ = $1 + $3; printf("a: %f, %f, %c, %f\n",$$, $1, $2, $3);}
-//   | tE '-' tF     {$$ = $1 - $3; printf("b: %f, %f, %c, %f\n",$$, $1, $2, $3);}
-//   | tT           {$$ = $1; printf("c: %f, %f\n",$$, $1);}
-//   ;
-
-// tT : tT '*' tF     {$$ = $1 * $3; printf("d: %f, %f, %c, %f\n",$$, $1, $2, $3);}
-//   | tT '/' tF     {$$ = $1 / $3; printf("e: %f, %f, %c, %f\n",$$, $1, $2, $3);}
-//   | tF           {$$ = $1; printf("f: %f, %f\n",$$, $1);}
-//   ;
-
-// tF : '(' tE ')'   {$$ = $2; printf("g: %f, %f\n",$$, $2);}
-//   | '-' tF       {$$ = - $2; printf("h: %f, %f\n",$$, $2);}
-//   | tNUM         {$$ = $1; printf("\n(%d) i: %f, %f\n",tok_atual, $$, $1);}
-//   ;
-
 
 %%
-
-/**************************/
-/* Additional C code      */
-/**************************/
 
 int yyerror(char * message) {
   printf("\033[0;31m");
@@ -423,7 +293,7 @@ int yyerror(char * message) {
 
 static int yylex(void) { 
   toktok = ERROR;
-  toktok = tabledriven(tokenString_atual, toktok, TRUE);
+  toktok = tabledriven(tokenString_atual, toktok, FALSE);
   int temp = toktok;
   toktok = ajusta_token(toktok);
   // yylval.f = atof(tokenString_atual);

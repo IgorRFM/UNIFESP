@@ -113,22 +113,6 @@ void printtoken(char* tk, TokenType tok) {
     }
 }
 
-bool digito(char c) {
-    if (c >= '0' && c <= '9') {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-bool letra(char c) {
-    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 /*
 get_next_char() - retorna o próximo char do arquivo, mantendo um buffer de tamanho constante tam_buffer
 */
@@ -200,6 +184,8 @@ typedef enum {
     estado_ID,
     estado_ACEITA
 } Estado;
+TokenType tok_atual = ERROR;
+char tokenString_atual[100];
 
 /*
 tabledriven(char *tk, TokenType tok, bool imprimir) - retorna o próximo token do arquivo.
@@ -215,9 +201,6 @@ prox_estado = estados[estado_atual][char_lido].
 A função retorna EOF ao atingir o fim do arquivo ou 1 caso contrário.
 
 */
-TokenType tok_atual = ERROR;
-char tokenString_atual[100];
-
 int tabledriven(char tk[100], TokenType tok, bool imprimir) {
     int estado = 0;
     char c = get_next_char();
@@ -228,10 +211,22 @@ int tabledriven(char tk[100], TokenType tok, bool imprimir) {
     bool flag_save = true;
     int flag_inicial = 0;
     while (estado != estado_ACEITA && c != EOF) {
-        // printf("Estado: %d, char: %c (%d)\n", estado, c, c);  // debug
+        // printf("Estado: %d, char: %c (%d)\n", estado, c, c - 32);  // debug
+        if (c != 10 && (((c - 32) < -1) || ((c - 32) > 93))) {
+            tk[i++] = c;
+            tk[i] = '\0';
+            printtoken(tk, ERROR);
+            return ERROR;
+        }
         estado = estados[estado][c - 32];
         // printf("novo estado: %d\n", estado);  // debug
         switch (estado) {
+            case 7:
+                tk[i++] = c;
+                tk[i] = '\0';
+                tok = ERROR;
+                printtoken(tk, tok);
+                return tok;
             case estado_INICIAL:
                 c = get_next_char();
                 break;
@@ -430,190 +425,11 @@ int tabledriven(char tk[100], TokenType tok, bool imprimir) {
         }
         if (imprimir)
             printtoken(tk, tok);
+        // printf("aqui?1\n");
         return tok;
     }
     return 0;
 }
-
-// /*
-// get_next_token() - retorna o próximo token do arquivo. (case aninhado, funcionando mas não estava usando a tabela de transições)
-// */
-// TokenType get_next_token(bool imprimir) {
-//     // printf("iniciando token\n");
-//     int loop_flag;
-//     int estado_idx = 0;
-//     TokenType tok;
-//     Estado estado = estado_INICIAL;
-//     char tk[256];
-
-//     int flagtk = TRUE;
-
-//     while (estado != estado_ACEITA) {
-//         char c = get_next_char();
-//         // printf("char: %c\n", c);
-//         switch (estado) {
-//             case estado_INICIAL:
-//                 if (c == ' ' || c == '\t' || c == '\n') {
-//                     flagtk = FALSE;
-//                 } else if (digito(c)) {
-//                     estado = estado_NUM;
-//                     flagtk = TRUE;
-//                 } else if (letra(c)) {
-//                     estado = estado_ID;
-//                     flagtk = TRUE;
-//                     // printf("começou um ID\n");
-//                 } else if (c == '=') {
-//                     estado = estado_ATTR;
-//                     flagtk = TRUE;
-
-//                 } else {
-//                     estado = estado_ACEITA;
-//                     switch (c) {
-//                         case EOF:
-//                             flagtk = FALSE;
-//                             tok = END_OF_FILE;
-//                             break;
-//                         case '=':
-//                             tok = EQ;
-//                             flagtk = TRUE;
-//                             break;
-//                         case '+':
-//                             flagtk = TRUE;
-//                             tok = PLUS;
-//                             break;
-//                         case '-':
-//                             flagtk = TRUE;
-//                             tok = MINUS;
-//                             break;
-//                         case '*':
-//                             flagtk = TRUE;
-//                             tok = TIMES;
-//                             break;
-//                         case '/':
-//                             tok = OVER;
-//                             if ((c = get_next_char()) == '*') {
-//                                 estado = estado_COMENTARIO;
-//                                 flagtk = FALSE;
-//                             } else
-//                                 flagtk = TRUE;
-//                             unget_char();
-//                             break;
-//                         case '<':
-//                             flagtk = TRUE;
-//                             tok = LT;
-//                             break;
-//                         case '>':
-//                             flagtk = TRUE;
-//                             tok = GT;
-//                             break;
-//                         case ';':
-//                             flagtk = TRUE;
-//                             tok = SEMI;
-//                             break;
-//                         case ',':
-//                             flagtk = TRUE;
-//                             tok = COMMA;
-//                             break;
-//                         case '(':
-//                             flagtk = TRUE;
-//                             tok = LPAREN;
-//                             break;
-//                         case ')':
-//                             flagtk = TRUE;
-//                             tok = RPAREN;
-//                             break;
-//                         case '[':
-//                             flagtk = TRUE;
-//                             tok = LBRACKET;
-//                             break;
-//                         case ']':
-//                             flagtk = TRUE;
-//                             tok = RBRACKET;
-//                             break;
-//                         case '{':
-//                             flagtk = TRUE;
-//                             tok = LBRACE;
-//                             break;
-//                         case '}':
-//                             flagtk = TRUE;
-//                             tok = RBRACE;
-//                             break;
-//                         default:
-//                             flagtk = TRUE;
-//                             tok = ERROR;
-//                             break;
-//                     }
-//                 }
-//                 break;
-//             case estado_COMENTARIO:
-//                 loop_flag = TRUE;
-//                 while (loop_flag) {
-//                     c = get_next_char();
-//                     if (c == '*') {
-//                         if ((c = get_next_char()) == '/') {
-//                             loop_flag = FALSE;
-//                             estado = estado_INICIAL;
-//                         }
-//                     }
-//                 }
-//                 break;
-//             case estado_ATTR:
-//                 if ((c = get_next_char()) == '=') {
-//                     tok = EQ;
-//                     flagtk = TRUE;
-//                 } else {
-//                     tok = ASSIGN;
-//                     unget_char();
-//                     flagtk = FALSE;
-//                 }
-//                 estado = estado_ACEITA;
-//                 break;
-//             case estado_NUM:
-//                 if (!digito(c)) {
-//                     unget_char();
-//                     flagtk = FALSE;
-//                     estado = estado_ACEITA;
-//                     tok = NUM;
-//                 }
-//                 break;
-//             case estado_ID:
-//                 // printf("letra %c é letra? %d\n", c, !letra(c));
-//                 if (!letra(c)) {
-//                     // printf("retornando um char\n");
-//                     unget_char();
-//                     estado = estado_ACEITA;
-//                     flagtk = FALSE;
-//                     tok = ID;
-//                 }
-//                 break;
-//             case estado_ACEITA:
-//                 break;
-//             default:
-//                 printf("Erro léxico: %s, Linha: %d\n", tk, buffer->linha);
-//                 break;
-//         }
-//         if (flagtk == TRUE) {
-//             // printf("escrevendo %c\n", c);
-//             tk[estado_idx++] = c;
-//         }
-//         if (estado == estado_ACEITA) {
-//             tk[estado_idx] = '\0';
-//             if (tok == ID) {
-//                 // printf("!!ID, %s\n", tk);
-//                 tok = busca_reservadas(tk);
-//             }
-//         }
-//     }
-//     if (imprimir) {
-//         printtoken(tk, tok);
-//     } else {
-//         if (tok == ERROR) {
-//             printf("Erro lexico: %s, Linha: %d\n", tk, buffer->linha + 1);
-//         }
-//     }
-
-//     return tok;
-// }
 
 int ajusta_token(TokenType token) {
     switch (token) {

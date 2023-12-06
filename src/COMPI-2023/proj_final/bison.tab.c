@@ -69,23 +69,23 @@
 /* First part of user prologue.  */
 #line 1 "bison.y"
 
-#define YYSTYPE TreeNode *
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #define YYPARSER 
 int yyerror(char * message);
+
 #include "lex.h"
-#include "util.h"
+
 static int yylex(void);
 static int yywrap(void);
 
 TokenType toktok = ERROR;
 extern char tokenString_atual[100];
-static int savedNumber;
-static TreeNode* aas;
+// static int savedNumber;
+// static TreeNode* aas;
 
-// #include "defit_NEQs.h"
 
 
 #line 92 "bison.tab.c"
@@ -150,32 +150,7 @@ enum yysymbol_kind_t
   YYSYMBOL_t_decl = 31,                    /* t_decl  */
   YYSYMBOL_t_vardecl = 32,                 /* t_vardecl  */
   YYSYMBOL_t_tipoEspec = 33,               /* t_tipoEspec  */
-  YYSYMBOL_t_funDecl = 34,                 /* t_funDecl  */
-  YYSYMBOL_t_params = 35,                  /* t_params  */
-  YYSYMBOL_t_paramList = 36,               /* t_paramList  */
-  YYSYMBOL_t_param = 37,                   /* t_param  */
-  YYSYMBOL_t_compdecl = 38,                /* t_compdecl  */
-  YYSYMBOL_t_localdecl = 39,               /* t_localdecl  */
-  YYSYMBOL_t_stmtlista = 40,               /* t_stmtlista  */
-  YYSYMBOL_t_stmt = 41,                    /* t_stmt  */
-  YYSYMBOL_t_expdecl = 42,                 /* t_expdecl  */
-  YYSYMBOL_t_selecdecl = 43,               /* t_selecdecl  */
-  YYSYMBOL_t_iterdecl = 44,                /* t_iterdecl  */
-  YYSYMBOL_t_retornodecl = 45,             /* t_retornodecl  */
-  YYSYMBOL_t_exp = 46,                     /* t_exp  */
-  YYSYMBOL_t_VAR = 47,                     /* t_VAR  */
-  YYSYMBOL_48_1 = 48,                      /* @1  */
-  YYSYMBOL_t_simpleexp = 49,               /* t_simpleexp  */
-  YYSYMBOL_t_comp = 50,                    /* t_comp  */
-  YYSYMBOL_t_somaexp = 51,                 /* t_somaexp  */
-  YYSYMBOL_t_soma = 52,                    /* t_soma  */
-  YYSYMBOL_t_termo = 53,                   /* t_termo  */
-  YYSYMBOL_t_mult = 54,                    /* t_mult  */
-  YYSYMBOL_t_fator = 55,                   /* t_fator  */
-  YYSYMBOL_t_ativ = 56,                    /* t_ativ  */
-  YYSYMBOL_57_2 = 57,                      /* @2  */
-  YYSYMBOL_t_args = 58,                    /* t_args  */
-  YYSYMBOL_t_arglista = 59                 /* t_arglista  */
+  YYSYMBOL_t_funDecl = 34                  /* t_funDecl  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -503,16 +478,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  9
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   101
+#define YYLAST   9
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  28
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  32
+#define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  64
+#define YYNRULES  11
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  107
+#define YYNSTATES  17
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   271
@@ -561,15 +536,10 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int16 yyrline[] =
+static const yytype_int8 yyrline[] =
 {
-       0,    33,    33,    39,    52,    55,    57,    60,    67,    77,
-      80,    86,    97,    99,   108,   111,   117,   124,   133,   145,
-     148,   160,   163,   164,   165,   166,   167,   170,   171,   174,
-     181,   190,   200,   206,   214,   221,   226,   232,   232,   244,
-     252,   257,   263,   269,   275,   281,   286,   294,   302,   307,
-     313,   321,   329,   332,   338,   346,   347,   348,   349,   356,
-     356,   366,   367,   370,   382
+       0,    30,    30,    35,    39,    44,    46,    50,    53,    59,
+      61,    71
 };
 #endif
 
@@ -589,12 +559,7 @@ static const char *const yytname[] =
   "t_INT", "t_RETURN", "t_VOID", "t_WHILE", "t_ID", "t_NUM", "t_LT",
   "t_LTE", "t_GT", "t_GTE", "t_EQ", "t_NEQ", "';'", "'['", "']'", "'('",
   "')'", "','", "'='", "'+'", "'-'", "'*'", "'/'", "$accept", "t_programa",
-  "t_declList", "t_decl", "t_vardecl", "t_tipoEspec", "t_funDecl",
-  "t_params", "t_paramList", "t_param", "t_compdecl", "t_localdecl",
-  "t_stmtlista", "t_stmt", "t_expdecl", "t_selecdecl", "t_iterdecl",
-  "t_retornodecl", "t_exp", "t_VAR", "@1", "t_simpleexp", "t_comp",
-  "t_somaexp", "t_soma", "t_termo", "t_mult", "t_fator", "t_ativ", "@2",
-  "t_args", "t_arglista", YY_NULLPTR
+  "t_declList", "t_decl", "t_vardecl", "t_tipoEspec", "t_funDecl", YY_NULLPTR
 };
 
 static const char *
@@ -604,12 +569,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-69)
+#define YYPACT_NINF (-15)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-60)
+#define YYTABLE_NINF (-1)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -618,17 +583,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       9,   -69,   -69,    11,     9,   -69,   -69,    13,   -69,   -69,
-     -69,    40,   -69,    17,     9,    19,    33,    34,    44,   -69,
-      42,    53,    54,     9,   -69,    55,   -69,   -69,   -69,   -69,
-       9,   -69,    64,     0,   -16,    43,    -5,    56,    57,   -69,
-     -69,    66,   -69,    36,   -69,   -69,   -69,   -69,   -69,   -69,
-      61,    58,   -69,    37,    41,   -69,   -69,    36,   -69,    66,
-      62,    36,    60,    63,    65,   -69,    36,   -69,   -69,   -69,
-     -69,   -69,   -69,   -69,   -69,    36,    36,   -69,   -69,    36,
-      67,   -69,    68,    36,   -69,   -69,   -69,   -69,    45,    41,
-     -69,    23,    23,   -69,    69,    70,    73,    79,   -69,   -69,
-      36,    36,    23,   -69,    74,   -69,   -69
+      -5,   -15,   -15,     1,    -5,   -15,   -15,    -4,   -15,   -15,
+     -15,   -14,   -15,    -3,   -13,    -9,   -15
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -636,35 +592,20 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     9,    10,     0,     2,     4,     5,     0,     6,     1,
-       3,     0,     7,     0,     0,     0,     0,     0,    12,    14,
-       0,    15,     0,     0,     8,     0,    19,    11,    13,    16,
-      21,    18,     0,     0,     0,     0,     0,     0,    36,    58,
-      28,    19,    17,     0,    23,    20,    22,    24,    25,    26,
-       0,    56,    35,    40,    48,    52,    57,     0,    32,     0,
-       0,     0,     0,     0,     0,    27,     0,    41,    42,    43,
-      44,    45,    46,    49,    50,     0,     0,    53,    54,     0,
-       0,    33,     0,    62,    37,    55,    34,    56,    39,    47,
-      51,     0,     0,    64,     0,    61,     0,    29,    31,    60,
-       0,     0,     0,    63,     0,    30,    38
+      11,     9,    10,     0,     2,     4,     5,     0,     6,     1,
+       3,     0,     7,     0,     0,     0,     8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -69,   -69,   -69,    80,    71,    14,   -69,   -69,   -69,    72,
-      75,   -69,   -69,   -68,   -69,   -69,   -69,   -69,   -36,   -40,
-     -69,   -69,   -69,    10,   -69,    18,   -69,     8,   -69,   -69,
-     -69,   -69
+     -15,   -15,   -15,     5,   -15,   -15,   -15
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     3,     4,     5,     6,     7,     8,    17,    18,    19,
-      44,    30,    33,    45,    46,    47,    48,    49,    50,    51,
-      96,    52,    75,    53,    76,    54,    79,    55,    56,    62,
-      94,    95
+       0,     3,     4,     5,     6,     7,     8
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -672,32 +613,12 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      60,    12,    13,    35,    38,    39,    36,    64,    37,    38,
-      39,     9,    58,    59,     1,    43,     2,    40,    41,    42,
-      43,    80,    11,    97,    98,    82,    35,    15,    16,    36,
-      86,    37,    38,    39,   105,    87,    87,    16,    20,    87,
-      40,    41,    21,    43,    32,    38,    39,    93,    67,    68,
-      69,    70,    71,    72,    59,    22,    43,    12,    13,    24,
-      14,    73,    74,    57,   103,   104,    23,    77,    78,    73,
-      74,    25,    26,    34,    29,    63,    61,   -59,    65,    81,
-      83,    66,    84,   102,    10,    88,    85,    90,    91,    92,
-      99,   101,   100,   106,    89,    28,     0,    27,     0,     0,
-       0,    31
+       1,     9,     2,    12,    13,    11,    15,    14,    16,    10
 };
 
 static const yytype_int8 yycheck[] =
 {
-      36,    17,    18,     3,     9,    10,     6,    43,     8,     9,
-      10,     0,    17,    18,     5,    20,     7,    17,    18,    19,
-      20,    57,     9,    91,    92,    61,     3,    10,    14,     6,
-      66,     8,     9,    10,   102,    75,    76,    23,    19,    79,
-      17,    18,     9,    20,    30,     9,    10,    83,    11,    12,
-      13,    14,    15,    16,    18,    21,    20,    17,    18,    17,
-      20,    24,    25,    20,   100,   101,    22,    26,    27,    24,
-      25,    18,    18,     9,    19,     9,    20,    20,    17,    17,
-      20,    23,    19,     4,     4,    75,    21,    79,    21,    21,
-      21,    18,    22,    19,    76,    23,    -1,    22,    -1,    -1,
-      -1,    30
+       5,     0,     7,    17,    18,     9,    19,    10,    17,     4
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -705,40 +626,21 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     5,     7,    29,    30,    31,    32,    33,    34,     0,
-      31,     9,    17,    18,    20,    10,    33,    35,    36,    37,
-      19,     9,    21,    22,    17,    18,    18,    38,    37,    19,
-      39,    32,    33,    40,     9,     3,     6,     8,     9,    10,
-      17,    18,    19,    20,    38,    41,    42,    43,    44,    45,
-      46,    47,    49,    51,    53,    55,    56,    20,    17,    18,
-      46,    20,    57,     9,    46,    17,    23,    11,    12,    13,
-      14,    15,    16,    24,    25,    50,    52,    26,    27,    54,
-      46,    17,    46,    20,    19,    21,    46,    47,    51,    53,
-      55,    21,    21,    46,    58,    59,    48,    41,    41,    21,
-      22,    18,     4,    46,    46,    41,    19
+      31,     9,    17,    18,    10,    19,    17
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    28,    29,    30,    30,    31,    31,    32,    32,    33,
-      33,    34,    35,    36,    36,    37,    37,    38,    39,    39,
-      40,    40,    41,    41,    41,    41,    41,    42,    42,    43,
-      43,    44,    45,    45,    46,    46,    47,    48,    47,    49,
-      49,    50,    50,    50,    50,    50,    50,    51,    51,    52,
-      52,    53,    53,    54,    54,    55,    55,    55,    55,    57,
-      56,    58,    58,    59,    59
+      33,    34
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     1,     1,     1,     3,     6,     1,
-       1,     6,     1,     3,     1,     2,     4,     4,     2,     0,
-       2,     0,     1,     1,     1,     1,     1,     2,     1,     5,
-       7,     5,     2,     3,     3,     1,     1,     0,     7,     3,
-       1,     1,     1,     1,     1,     1,     1,     3,     1,     1,
-       1,     3,     1,     1,     1,     3,     1,     1,     1,     0,
-       5,     1,     0,     3,     1
+       1,     0
 };
 
 
@@ -1202,594 +1104,79 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* t_programa: t_declList  */
-#line 33 "bison.y"
+#line 30 "bison.y"
                        {
-                printTree(aas);
-                aas=yyvsp[0];
                 printf("Programa\n");
+                yyval = yyvsp[0];
                 }
-#line 1212 "bison.tab.c"
+#line 1113 "bison.tab.c"
     break;
 
   case 3: /* t_declList: t_declList t_decl  */
-#line 40 "bison.y"
+#line 36 "bison.y"
             { printf("decl list\n");
-              TreeNode * t = yyvsp[-1];
-              if( t == NULL){
-                yyval = yyvsp[0];
-            }else{
-              while(t->sibling != NULL){ // percorre ate o ut_LTimo irmao
-                t = t->sibling;
-              }
-              t->sibling = yyvsp[0];
-              yyval = yyvsp[-1];
+              yyval = yyvsp[-1] + yyvsp[0];
             }
-            }
-#line 1229 "bison.tab.c"
+#line 1121 "bison.tab.c"
     break;
 
   case 4: /* t_declList: t_decl  */
-#line 52 "bison.y"
-                  {yyval = yyvsp[0]; printf("decl\n");}
-#line 1235 "bison.tab.c"
+#line 39 "bison.y"
+                  {
+         printf("decl\n");
+         yyval = yyvsp[0];}
+#line 1129 "bison.tab.c"
     break;
 
   case 5: /* t_decl: t_vardecl  */
-#line 55 "bison.y"
-                   {yyval = yyvsp[0];
-printf("decl\n");}
-#line 1242 "bison.tab.c"
+#line 44 "bison.y"
+                   {yyval = yyvsp[0]; 
+printf("v_decl\n");}
+#line 1136 "bison.tab.c"
     break;
 
   case 6: /* t_decl: t_funDecl  */
-#line 57 "bison.y"
-                 {yyval = yyvsp[0];printf("decl\n");}
-#line 1248 "bison.tab.c"
+#line 46 "bison.y"
+                 {yyval = yyvsp[0];
+      printf("f_decl\n");}
+#line 1143 "bison.tab.c"
     break;
 
   case 7: /* t_vardecl: t_tipoEspec t_ID ';'  */
-#line 60 "bison.y"
+#line 50 "bison.y"
                                  {
-  printf("var decl\n");
-  yyval = newDeclNode(VarK);
-                                  yyval->child[0] = yyvsp[-2];
-                                  yyval->attr.name = buffer->buf;
-                                  yyval->lineno = buffer->linha;
-                                  }
-#line 1260 "bison.tab.c"
+            printf("var decl\n");
+                            yyval = yyvsp[-2] + yyvsp[-1];      }
+#line 1151 "bison.tab.c"
     break;
 
   case 8: /* t_vardecl: t_tipoEspec t_ID '[' t_NUM ']' ';'  */
-#line 67 "bison.y"
+#line 53 "bison.y"
                                              {
           printf("[var decl]\n");
-               yyval = newDeclNode(ArrVarK);
-                    yyval->child[0] = yyvsp[-5];
-                    yyval->lineno = buffer->linha;
-                    yyval->type = IntegerArray;
-                    yyval->attr.name = buffer->buf;
-                    yyval->attr.val = savedNumber;}
-#line 1273 "bison.tab.c"
+             yyval = yyvsp[-5] + yyvsp[-4] + yyvsp[-3] + yyvsp[-2] + yyvsp[-1] + yyvsp[0];
+                    }
+#line 1160 "bison.tab.c"
     break;
 
   case 9: /* t_tipoEspec: t_INT  */
-#line 77 "bison.y"
-                    {yyval = newExpNode(TypeK);
-                    yyval->type = Integer;
+#line 59 "bison.y"
+                    {yyval = yyvsp[0];
                     printf("Tipo espec. INT\n");}
-#line 1281 "bison.tab.c"
+#line 1167 "bison.tab.c"
     break;
 
   case 10: /* t_tipoEspec: t_VOID  */
-#line 80 "bison.y"
+#line 61 "bison.y"
                   {
             printf("Tipo espec. VOID\n");
-            yyval = newExpNode(TypeK);
-                    yyval->type = Void;}
-#line 1290 "bison.tab.c"
-    break;
-
-  case 11: /* t_funDecl: t_tipoEspec t_ID '(' t_params ')' t_compdecl  */
-#line 86 "bison.y"
-                                                         {
-  printf("fun decl\n");
-              yyval = newDeclNode(FunK);
-              yyval->lineno = buffer->linha;
-              yyval->attr.name = buffer->buf;
-              yyval->child[0] = yyvsp[-5];
-              yyval->child[1] = yyvsp[-2];
-              yyval->child[2] = yyvsp[0];
+            yyval = yyvsp[0];
             }
-#line 1304 "bison.tab.c"
-    break;
-
-  case 12: /* t_params: t_paramList  */
-#line 97 "bison.y"
-                       {yyval = yyvsp[0]; printf("params\n");}
-#line 1310 "bison.tab.c"
-    break;
-
-  case 13: /* t_paramList: t_paramList ',' t_param  */
-#line 99 "bison.y"
-                                      {
-            printf("param list\n");
-            TreeNode *t = yyvsp[-2];
-            while(t->sibling != NULL){ // percorre ate o ut_LTimo irmao
-              t = t->sibling;
-            }
-            t->sibling = yyvsp[0];
-            yyval = yyvsp[-2];
-            }
-#line 1324 "bison.tab.c"
-    break;
-
-  case 14: /* t_paramList: t_param  */
-#line 108 "bison.y"
-                      {yyval = yyvsp[0];}
-#line 1330 "bison.tab.c"
-    break;
-
-  case 15: /* t_param: t_tipoEspec t_ID  */
-#line 111 "bison.y"
-                           {
-        printf("param\n");
-          yyval = newDeclNode(ParamK);
-          yyval->child[0] = yyvsp[-1];
-          yyval->attr.name = buffer->buf;
-          }
-#line 1341 "bison.tab.c"
-    break;
-
-  case 16: /* t_param: t_tipoEspec t_ID '[' ']'  */
-#line 117 "bison.y"
-                                     {
-            printf("param\n");
-            yyval = newDeclNode(ArrParamK);
-            yyval->child[0] = yyvsp[-3];
-            strcpy(yyval->attr.name, buffer->buf);
-          }
-#line 1352 "bison.tab.c"
-    break;
-
-  case 17: /* t_compdecl: '[' t_localdecl t_stmtlista ']'  */
-#line 125 "bison.y"
-                { 
-                  printf("comp decl\n");
-                  yyval = newStmtNode(CompoundK);
-                  yyval->child[0] = yyvsp[-2];
-                  yyval->child[1] = yyvsp[-1];
-                }
-#line 1363 "bison.tab.c"
-    break;
-
-  case 18: /* t_localdecl: t_localdecl t_vardecl  */
-#line 134 "bison.y"
-                     {
-                      printf("local dcl\n"); 
-                      TreeNode * t = yyvsp[-1];
-                       if (t != NULL) {
-                         while (t->sibling != NULL) { t = t->sibling; }
-                         t->sibling = yyvsp[0];
-                         yyval = yyvsp[-1];
-                       } else {
-                         yyval = yyvsp[0];
-                       }
-                     }
-#line 1379 "bison.tab.c"
-    break;
-
-  case 19: /* t_localdecl: %empty  */
-#line 145 "bison.y"
-                     { yyval = NULL; }
-#line 1385 "bison.tab.c"
-    break;
-
-  case 20: /* t_stmtlista: t_stmtlista t_stmt  */
-#line 149 "bison.y"
-                 {
-                  printf("stmt lista\n "); 
-                  TreeNode * t = yyvsp[-1];
-                   if (t != NULL) {
-                     while (t->sibling != NULL) { t = t->sibling; }
-                    t->sibling = yyvsp[0];
-                    yyval = yyvsp[-1];
-                   } else {
-                     yyval = yyvsp[0];
-                   }
-                 }
-#line 1401 "bison.tab.c"
-    break;
-
-  case 21: /* t_stmtlista: %empty  */
-#line 160 "bison.y"
-                 { yyval = NULL; }
-#line 1407 "bison.tab.c"
-    break;
-
-  case 22: /* t_stmt: t_expdecl  */
-#line 163 "bison.y"
-                   { yyval = yyvsp[0]; printf("stmt exp\n" );}
-#line 1413 "bison.tab.c"
-    break;
-
-  case 23: /* t_stmt: t_compdecl  */
-#line 164 "bison.y"
-                       { yyval = yyvsp[0]; printf("stmt comp\n");}
-#line 1419 "bison.tab.c"
-    break;
-
-  case 24: /* t_stmt: t_selecdecl  */
-#line 165 "bison.y"
-                        { yyval = yyvsp[0]; printf("stmt selec\n");}
-#line 1425 "bison.tab.c"
-    break;
-
-  case 25: /* t_stmt: t_iterdecl  */
-#line 166 "bison.y"
-                       { yyval = yyvsp[0]; printf("stmt iter\n");}
-#line 1431 "bison.tab.c"
-    break;
-
-  case 26: /* t_stmt: t_retornodecl  */
-#line 167 "bison.y"
-                          { yyval = yyvsp[0]; printf("stmt retorno\n");}
-#line 1437 "bison.tab.c"
-    break;
-
-  case 27: /* t_expdecl: t_exp ';'  */
-#line 170 "bison.y"
-                      { yyval = yyvsp[-1]; printf(";");}
-#line 1443 "bison.tab.c"
-    break;
-
-  case 28: /* t_expdecl: ';'  */
-#line 171 "bison.y"
-                      { yyval = NULL; printf(";");}
-#line 1449 "bison.tab.c"
-    break;
-
-  case 29: /* t_selecdecl: t_IF '(' t_exp ')' t_stmt  */
-#line 175 "bison.y"
-                 { 
-                  printf( "if(exp)algo\n");
-                  yyval = newStmtNode(IfK);
-                   yyval->child[0] = yyvsp[-2];
-                   yyval->child[1] = yyvsp[0];
-                 }
-#line 1460 "bison.tab.c"
-    break;
-
-  case 30: /* t_selecdecl: t_IF '(' t_exp ')' t_stmt t_ELSE t_stmt  */
-#line 182 "bison.y"
-                 { printf( "if(exp)algo else algo\n");
-                  yyval = newStmtNode(IfK);
-                   yyval->child[0] = yyvsp[-4];
-                   yyval->child[1] = yyvsp[-2];
-                   yyval->child[2] = yyvsp[0];
-                 }
-#line 1471 "bison.tab.c"
-    break;
-
-  case 31: /* t_iterdecl: t_WHILE '(' t_exp ')' t_stmt  */
-#line 191 "bison.y"
-                 { 
-                    printf( "while\n");
-                    
-                  yyval = newStmtNode(RepeatK);
-                   yyval->child[0] = yyvsp[-2];
-                   yyval->child[1] = yyvsp[0];
-                 }
-#line 1483 "bison.tab.c"
-    break;
-
-  case 32: /* t_retornodecl: t_RETURN ';'  */
-#line 201 "bison.y"
-              { 
-                printf( "return\n");
-                yyval = newStmtNode(ReturnK);
-                yyval->type = Void;
-              }
-#line 1493 "bison.tab.c"
-    break;
-
-  case 33: /* t_retornodecl: t_RETURN t_exp ';'  */
-#line 207 "bison.y"
-              { 
-                printf( "return\n");
-                yyval = newStmtNode(ReturnK);
-                yyval->child[0] = yyvsp[-1];
-              }
-#line 1503 "bison.tab.c"
-    break;
-
-  case 34: /* t_exp: t_VAR '=' t_exp  */
-#line 215 "bison.y"
-             { 
-              printf( "exp\n");
-              yyval = newStmtNode(AssignK);
-               yyval->child[0] = yyvsp[-2];
-               yyval->child[1] = yyvsp[0];
-             }
-#line 1514 "bison.tab.c"
-    break;
-
-  case 35: /* t_exp: t_simpleexp  */
-#line 221 "bison.y"
-                         { 
-            printf( "exp_simpleexp\n");
-            yyval = yyvsp[0]; }
-#line 1522 "bison.tab.c"
-    break;
-
-  case 36: /* t_VAR: t_ID  */
-#line 227 "bison.y"
-      {
-        printf( "var\n");
-         yyval = newExpNode(IdK);
-        yyval->attr.name = buffer->buf;
-      }
-#line 1532 "bison.tab.c"
-    break;
-
-  case 37: /* @1: %empty  */
-#line 232 "bison.y"
-                 {
-      printf( "arr\n");
-        yyval = newExpNode(ArrIdK);
-        yyval->attr.name = buffer->buf;
-      }
-#line 1542 "bison.tab.c"
-    break;
-
-  case 38: /* t_VAR: '[' t_ID ']' @1 '[' t_exp ']'  */
-#line 237 "bison.y"
-      {
-        printf("[var]\n");
-        yyval = yyvsp[-5];
-        yyval->child[0] = yyvsp[-3];
-      }
-#line 1552 "bison.tab.c"
-    break;
-
-  case 39: /* t_simpleexp: t_somaexp t_comp t_somaexp  */
-#line 245 "bison.y"
-                    { 
-                      printf( "simpleexp\n");
-                      yyval = newExpNode(CalcK);
-                      yyval->child[0] = yyvsp[-2];
-                      yyval->child[1] = yyvsp[-1];
-                      yyval->child[2] = yyvsp[0];
-                    }
-#line 1564 "bison.tab.c"
-    break;
-
-  case 40: /* t_simpleexp: t_somaexp  */
-#line 252 "bison.y"
-                              { 
-                    printf( "simpt_LTEsexp_termo\n");
-                    yyval = yyvsp[0]; }
-#line 1572 "bison.tab.c"
-    break;
-
-  case 41: /* t_comp: t_LT  */
-#line 258 "bison.y"
-        {
-          printf( "lt\n");
-           yyval = newExpNode(OpK);
-          yyval->attr.op = t_LT;
-        }
-#line 1582 "bison.tab.c"
-    break;
-
-  case 42: /* t_comp: t_LTE  */
-#line 264 "bison.y"
-        {
-          printf( "lte\n");
-           yyval = newExpNode(OpK);
-          yyval->attr.op = t_LTE;
-        }
-#line 1592 "bison.tab.c"
-    break;
-
-  case 43: /* t_comp: t_GT  */
-#line 270 "bison.y"
-        {
-          printf( "gt\n");
-           yyval = newExpNode(OpK);
-          yyval->attr.op = t_GT;
-        }
-#line 1602 "bison.tab.c"
-    break;
-
-  case 44: /* t_comp: t_GTE  */
-#line 276 "bison.y"
-        {
-          printf( "gte\n");
-           yyval = newExpNode(OpK);
-          yyval->attr.op = t_GTE;
-        }
-#line 1612 "bison.tab.c"
-    break;
-
-  case 45: /* t_comp: t_EQ  */
-#line 282 "bison.y"
-        { printf( "eq\n");
-          yyval = newExpNode(OpK);
-          yyval->attr.op = t_EQ;
-        }
-#line 1621 "bison.tab.c"
-    break;
-
-  case 46: /* t_comp: t_NEQ  */
-#line 287 "bison.y"
-        { 
-          printf( "neq\n");
-          yyval = newExpNode(OpK);
-          yyval->attr.op = t_NEQ;
-        }
-#line 1631 "bison.tab.c"
-    break;
-
-  case 47: /* t_somaexp: t_somaexp t_soma t_termo  */
-#line 295 "bison.y"
-                      { 
-                        printf( "somaexp\n");
-                        yyval = newExpNode(CalcK);
-                        yyval->child[0] = yyvsp[-2];
-                        yyval->child[1] = yyvsp[-1];
-                        yyval->child[2] = yyvsp[0];
-                      }
-#line 1643 "bison.tab.c"
-    break;
-
-  case 48: /* t_somaexp: t_termo  */
-#line 302 "bison.y"
-                              {
-                      printf( "somaexp_termo\n");
-                       yyval = yyvsp[0]; }
-#line 1651 "bison.tab.c"
-    break;
-
-  case 49: /* t_soma: '+'  */
-#line 308 "bison.y"
-        { 
-          printf("mais\n");
-          yyval = newExpNode(OpK);
-          yyval->attr.op = PLUS;
-        }
-#line 1661 "bison.tab.c"
-    break;
-
-  case 50: /* t_soma: '-'  */
-#line 314 "bison.y"
-        { 
-          printf("menos\n");
-          yyval = newExpNode(OpK);
-          yyval->attr.op = MINUS;
-        }
-#line 1671 "bison.tab.c"
-    break;
-
-  case 51: /* t_termo: t_termo t_mult t_fator  */
-#line 322 "bison.y"
-       {
-        printf("termo\n") ;
-        yyval = newExpNode(CalcK);
-         yyval->child[0] = yyvsp[-2];
-         yyval->child[1] = yyvsp[-1];
-         yyval->child[2] = yyvsp[0];
-       }
-#line 1683 "bison.tab.c"
-    break;
-
-  case 52: /* t_termo: t_fator  */
-#line 329 "bison.y"
-               { yyval = yyvsp[0]; }
-#line 1689 "bison.tab.c"
-    break;
-
-  case 53: /* t_mult: '*'  */
-#line 333 "bison.y"
-        {
-          printf("mult\n");
-           yyval = newExpNode(OpK);
-          yyval->attr.op = TIMES;
-        }
-#line 1699 "bison.tab.c"
-    break;
-
-  case 54: /* t_mult: '/'  */
-#line 339 "bison.y"
-        { 
-          printf("div\n");
-          yyval = newExpNode(OpK);
-          yyval->attr.op = OVER;
-        }
-#line 1709 "bison.tab.c"
-    break;
-
-  case 55: /* t_fator: '(' t_exp ')'  */
-#line 346 "bison.y"
-                        { yyval = yyvsp[-1]; printf( "(fator)\n");}
-#line 1715 "bison.tab.c"
-    break;
-
-  case 56: /* t_fator: t_VAR  */
-#line 347 "bison.y"
-               { yyval = yyvsp[0]; printf( "fator_var\n");}
-#line 1721 "bison.tab.c"
-    break;
-
-  case 57: /* t_fator: t_ativ  */
-#line 348 "bison.y"
-                { yyval = yyvsp[0]; printf( "fator_ativ\n"); }
-#line 1727 "bison.tab.c"
-    break;
-
-  case 58: /* t_fator: t_NUM  */
-#line 350 "bison.y"
-         { yyval = newExpNode(ConstK);
-           yyval->type = Integer;
-           yyval->attr.val = atoi(buffer->buf);
-         }
-#line 1736 "bison.tab.c"
-    break;
-
-  case 59: /* @2: %empty  */
-#line 356 "bison.y"
-              {
-        printf("ativ\n");
-         yyval = newExpNode(CallK);
-         yyval->attr.name = buffer->buf;
-         }
-#line 1746 "bison.tab.c"
-    break;
-
-  case 60: /* t_ativ: t_ID @2 '(' t_args ')'  */
-#line 360 "bison.y"
-                          {
-           yyval = yyvsp[-3];
-           yyval->child[0] = yyvsp[-1];
-       }
-#line 1755 "bison.tab.c"
-    break;
-
-  case 61: /* t_args: t_arglista  */
-#line 366 "bison.y"
-                    { yyval = yyvsp[0]; printf("args\n"); }
-#line 1761 "bison.tab.c"
-    break;
-
-  case 62: /* t_args: %empty  */
-#line 367 "bison.y"
-       { printf( "null\n"); yyval = NULL; }
-#line 1767 "bison.tab.c"
-    break;
-
-  case 63: /* t_arglista: t_arglista ',' t_exp  */
-#line 371 "bison.y"
-           {
-            printf("arglista\n");
-            TreeNode * t = yyvsp[-2];
-             if (t != NULL) {
-               while (t->sibling != NULL) { t = t->sibling; }
-               t->sibling = yyvsp[0];
-               yyval = yyvsp[-2];
-             } else {
-               yyval = yyvsp[0];
-             }
-           }
-#line 1783 "bison.tab.c"
-    break;
-
-  case 64: /* t_arglista: t_exp  */
-#line 382 "bison.y"
-                 { yyval = yyvsp[0]; }
-#line 1789 "bison.tab.c"
+#line 1176 "bison.tab.c"
     break;
 
 
-#line 1793 "bison.tab.c"
+#line 1180 "bison.tab.c"
 
       default: break;
     }
@@ -1982,12 +1369,8 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 407 "bison.y"
+#line 281 "bison.y"
 
-
-/**************************/
-/* Additional C code      */
-/**************************/
 
 int yyerror(char * message) {
   printf("\033[0;31m");
@@ -2002,7 +1385,7 @@ int yyerror(char * message) {
 
 static int yylex(void) { 
   toktok = ERROR;
-  toktok = tabledriven(tokenString_atual, toktok, TRUE);
+  toktok = tabledriven(tokenString_atual, toktok, FALSE);
   int temp = toktok;
   toktok = ajusta_token(toktok);
   // yylval.f = atof(tokenString_atual);
